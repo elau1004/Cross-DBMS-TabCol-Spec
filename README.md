@@ -131,7 +131,7 @@ The above are extracted out from the following:
     * Any name for the data type will be excepted by SQLite.
 
 ## Data Types
-Always pick the data type that is adequate to store your values.  It is much harder and slower to clean out corrupted data than to prevent them from corrupting in the first place.
+Always pick the data type that is adequate to store your values.  It is part of your documentation.  For example, a `SMALLINT` data type is more than sufficient to be the primary key for a table that stores all the countries on the planet.  It conveys a maximum ceiling for ID values of **32,767** and not **2,147,483,647**.
 
 ### Boolean:
 * The following are data type for boolean with the following variance:
@@ -174,6 +174,7 @@ Always pick the data type that is adequate to store your values.  It is much har
         * `SERIAL` data type are auto incremented `INTEGER`.
 * Don't oversize your data type to store a small number.  Right size your data type with a little room to grow but **no** more.
     * Do your analysis or profile your data before deciding on a "right" data type for your column.
+    * Do constraint the column with `CHECK` to the expected bound of your data.
 
 
 ### Fixed Point Number:
@@ -190,6 +191,7 @@ Always pick the data type that is adequate to store your values.  It is much har
         * _p_ denotes the precision.  The precision integer specifies the total number of digits.
         * _s_ denotes the scale.  The scale integer specifies the number of digits to the right of the decimal point.
     * It is good practice to specify the precision and scale because different DBMS have different default precision.
+    * Do constraint the column with `CHECK` to the expected bound of your data.
 
 ### Floating Point Number:
 * All DBMS listed above support this data type with the following variance:
@@ -204,6 +206,7 @@ Always pick the data type that is adequate to store your values.  It is much har
         | PostgreSQL|`REAL`                  |`DOUBLE PRECISION`      | `REAL` : &nbsp;&nbsp;&nbsp;&nbsp;01 <= _p_ <= 24<br>`DOUBLE` : 25 <= _p_ <= 53 |
         * where the elements between the brackets are optional.
         * _p_ denotes the precision in bits.
+    * Do constraint the column with `CHECK` to the expected bound of your data.
 
 ### Character Types:
 * The total storable character is dependent on the character set setup with for the database.

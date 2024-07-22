@@ -131,7 +131,9 @@ The above are extracted out from the following:
     * Any name for the data type will be excepted by SQLite.
 
 ## Data Types
-Always pick the data type that is adequate to store your values.  It is part of your documentation.  For example, a `SMALLINT` data type is more than sufficient to be the primary key for a table that stores all the countries on the planet.  It conveys a maximum ceiling for ID values of **32,767** and not **2,147,483,647**.
+Always pick the data type that is adequate to store your values.  It is not just a syntax requirement, it is part of your documentation.
+* For example, a `SMALLINT` data type is more than sufficient to be the primary key for a table that stores all the countries on the planet.  It conveys a maximum ceiling for ID values of **32,767** and not **2,147,483,647**.  In this example, it should be further constrain to a maximum of **200** with the following:
+    * `ID   SMALLINT NOT NULL CHECK( ID BETWEEN 1 AND 200 )`
 
 ### Boolean:
 * The following are data type for boolean with the following variance:

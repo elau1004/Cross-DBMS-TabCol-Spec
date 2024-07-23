@@ -126,14 +126,25 @@ The above are extracted out from the following:
 * JPA (ORM):    https://jakarta.ee/specifications/persistence/3.2/jakarta-persistence-spec-3.2
 * Reference:    https://www.databasestar.com/sql-data-types/
 
-### SQLite
-* `SQLite` uses type affinity.  SEE: https://www.sqlite.org/datatype3.html#affinity
-    * Any name for the data type will be accepted by SQLite.
+## Column name length
+* Different DBMS have different length for their column name with the following variance:
+    *   |DBMS       |Max Length|
+        |-----------|---------:|
+        | DB2       | 128      |
+        | Oracle    | 30       |
+        | MS-SQL    | 128      |
+        | SQLite    | >= 128   |
+        | MySQL     | 64       |
+        | PostgreSQL| 63       |
+    * If you are designing a data model to be portable between different DBMS, you should consider a column name no longer than **30** characters.
 
 ## Data Types
 Always pick the data type that is adequate to store your values.  It is not just a syntax requirement, it is part of your documentation.
 * For example, a `SMALLINT` data type is more than sufficient to be the primary key for a table that stores all the countries on the planet.  It conveys a maximum ceiling for ID values of **32,767** and not **2,147,483,647**.  In this example, it should be further constrain to a maximum of **200** with the following:
     * `ID   SMALLINT NOT NULL CHECK( ID BETWEEN 1 AND 200 )`
+    * `SQLite` uses type affinity.  SEE: https://www.sqlite.org/datatype3.html#affinity
+        * Any name for the data type will be accepted.
+
 
 ### Boolean:
 * The following are data type for boolean with the following variance:
@@ -146,6 +157,7 @@ Always pick the data type that is adequate to store your values.  It is not just
         | MySQL     |`BOOLEAN`  |
         | PostgreSQL|`BOOLEAN`  |
     * DBMS that does not have an explicit Boolean data type should use an integer, of precision one or storage size of one byte, constraint with `CHECK( colName IN(0 ,1 ,NULL))`.
+
 
 ### Integer:
 * All DBMS listed above support signed integer data type with the following variance:

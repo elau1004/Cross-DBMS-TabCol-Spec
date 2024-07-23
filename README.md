@@ -369,12 +369,12 @@ Always pick the data type that is adequate to store your values.  It is not just
 * DBMS specific identity column options.
     *   |DBMS       |Column Definition|
         |-----------|-----------------|
-        | DB2       | _colName_ _type_ `GENERATED ALWAYS AS IDENTITY( START WITH` _start_ `INCREMENT BY ` _incr_` ) PRIMARY KEY`|
-        | Oracle    | _colName_ _type_ `GENERATED ALWAYS AS IDENTITY( START WITH` _start_ `INCREMENT BY ` _incr_` ) PRIMARY KEY`|
+        | DB2       | _colName_ _type_ `GENERATED ALWAYS AS IDENTITY( START WITH` _start_ `INCREMENT BY ` _incr_ `) PRIMARY KEY`|
+        | Oracle    | _colName_ _type_ `GENERATED ALWAYS AS IDENTITY( START WITH` _start_ `INCREMENT BY ` _incr_ `) PRIMARY KEY`|
         | MS-SQL    | _colName_ _type_ `IDENTITY(` _start_ ,_increment_ `) PRIMARY KEY`|
         | SQLite    | _colName_ _type_ `PRIMARY KEY AUTOINCREMENT`|
         | MySQL     | _colName_ _type_ `AUTO_INCREMENT PRIMARY KEY` |
-        | PostgreSQL| _colName_ _type_ `GENERATED ALWAYS AS IDENTITY( INCREMENT BY ` _incr_ `START WITH` _start_ ` )`|
+        | PostgreSQL| _colName_ _type_ `GENERATED ALWAYS AS IDENTITY( INCREMENT BY ` _incr_ `START WITH` _start_ `)`|
         * Identity value defaults to start at **1**.  However, I recommend that it start at higher number depending on the data type. **10** or **100** are good candidates.  Starting at a higher number is akin to the stack memory where it is reserved for system seeded values.
         * SQLite starting need to be updated in the system table `sqlite_sequence` as follows:
             * `UPDATE sqlite_sequence SET seq = 100 WHERE NAME = ` 'tableName'`;`
@@ -406,8 +406,11 @@ Always pick the data type that is adequate to store your values.  It is not just
         | Oracle    | `CREATE TABLE` tabName `(...) TABLESPACE` _tabspace_name_ `[COMPRESS]`|
         | MS-SQL    | `CREATE TABLE` tabName `(...) [WITH (DATA_COMPRESSION = PAGE)]` `ON` _filegroup_name_|
         | SQLite    |                 |
-        | MySQL     | `CREATE TABLE` tabName `(...) TABLESPACE` _tabspace_name_ `[ROW_FORMAT=COMPRESSED]`|
+        | MySQL     | `CREATE TABLE` tabName `(...) TABLESPACE` _tabspace_name_|
         | PostgreSQL| `CREATE TABLE` tabName `(...) TABLESPACE` _tabspace_name_|
+    * MySQL cannot created a compressed table in a user defined tablespace.
+        *  A compressed table can be created in the default tablespace with the following table option:
+        * `[ENGINE=InnoDB ROW_FORMAT=COMPRESSED]`
     * PostgreSQL automatically compresses large values stored in tables using **TOAST**. This applies to `TEXT`, `BYTEA`, and `XML` data types by default.
         * You can enable custom `zstd` compression via `pgzstd` extension.
             * `CREATE EXTENSION pg_zstd;`
@@ -469,13 +472,13 @@ Always pick the data type that is adequate to store your values.  It is not just
         * <sup>a</sup>  `CHECK( _colName_ BETWEEN 0 AND 255 )`
         * <sup>b</sup>  `CHECK( _colName_ BETWEEN 0 AND 65535 )`
         * <sup>c</sup>  `CHECK( _colName_ BETWEEN 0 AND 4294967295 )`
-        * <sup>d</sup>  `CHECK( _colName_ BETWEEN 0 AND 18446744073709551615)`
-        * <sup>e</sup>  `CHECK( _colName_ BETWEEN 0 AND 340282366920938463463374607431768211455)`
+        * <sup>d</sup>  `CHECK( _colName_ BETWEEN 0 AND 18446744073709551615 )`
+        * <sup>e</sup>  `CHECK( _colName_ BETWEEN 0 AND 340282366920938463463374607431768211455 )`
 
 *   |Compound Type|DB2              |Oracle          |MS-SQL           |SQLite         |MySQL            |PostgreSQL     |
     |-------------|-----------------|----------------|-----------------|---------------|-----------------|---------------|
     |Date         |`DATE`           |`DATE`          |`DATE`           |`TEXT`         |`DATE`           |`DATE`         |
-    |Time         |`TIME(0)`        |`SMALLINT`      |`TIME(0)`        |`TEXT`         |`TIME(0)`        |`TIME(0)`      |
+    |Time         |`TIME(0)`        |`INTEGER`       |`TIME(0)`        |`TEXT`         |`TIME(0)`        |`TIME(0)`      |
     |Datetime     |`TIMESTAMP(0)`   |`TIMESTAMP(0)`  |`DATETIME`       |`TEXT`         |`DATETIME`       |`DATETIME`     |
     |Timestamp    |`TIMESTAMP(6)`   |`TIMESTAMP(6)`  |`TIMESTAMP(6)`   |`TEXT`         |`TIMESTAMP(6)`   |`TIMESTAMP(6)` |
     |Short string |`VARCHAR(4000)`  |`VARCHAR2(4000)`|`VARCHAR(4000)`  |`VARCHAR(4000)`|`VARCHAR(4000)`  |`VARCHAR(4000)`|
@@ -483,3 +486,8 @@ Always pick the data type that is adequate to store your values.  It is not just
     |Long string  |`CLOB(2M)`       |`CLOB`          |`TEXT`           |`TEXT`         |`LONGTEXT`       |`TEXT`         |
     |Long binary  |`BLOB(2M)`       |`BLOB`          |`VARBINARY(MAX)` |`BLOB`         |`LONGBLOB`       |`BYTEA`        |
     |             |                 |                |                 |               |                 |               |
+    * Oracle could store the time as the number of seconds (86400) since midnight.
+
+* ORM framework should support as many features, either directly or mappable, outline above.
+
+

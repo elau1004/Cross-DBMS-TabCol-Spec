@@ -127,7 +127,8 @@ CREATE  TABLE   IF  NOT EXISTS  Test_Column_Syntax(
         ,C1     CHAR(1)         NOT NULL               CHECK( C1 <>'?') UNIQUE
 --      ,C2     DECIMAL(10, 2)              ENCRYPTED WITH( COLUMN_ENCRYPTION_KEY = key_name ,ENCRYPTION_TYPE = DETERMINISTIC ,ALGORITHM = 'AEAD_AES_256_CBC_HMAC_SHA_256') 
         ,H0     TIMESTAMP       HIDDEN      DEFAULT CURRENT_TIMESTAMP
-);
+)
+;
 
 
 DROP    TABLE   IF      EXISTS  Test_Generate_Syntax
@@ -135,4 +136,5 @@ DROP    TABLE   IF      EXISTS  Test_Generate_Syntax
 CREATE  TABLE   IF  NOT EXISTS  Test_generate_Syntax(
          ID     INTEGER         NOT NULL    PRIMARY KEY AUTOINCREMENT
         ,C1     INTEGER         NOT NULL    GENERATED ALWAYS AS( ID +1 )  VIRTUAL
-);
+)
+;

@@ -135,7 +135,8 @@ CREATE  TABLE   Test_Column_Syntax(
         ,C1     CHAR(1)         NOT NULL    UNIQUE     CHECK( C1 <>'?')
         ,C2     DECIMAL(10, 2)              ENCRYPTED WITH( COLUMN_ENCRYPTION_KEY = key_name ,ENCRYPTION_TYPE = DETERMINISTIC ,ALGORITHM = 'AEAD_AES_256_CBC_HMAC_SHA_256') 
 --      ,H0     TIMESTAMP                   DEFAULT CURRENT_TIMESTAMP  HIDDEN
-);
+)
+;
 
 
 DROP    TABLE   Test_Generate_Syntax
@@ -143,4 +144,17 @@ DROP    TABLE   Test_Generate_Syntax
 CREATE  TABLE   Test_generate_Syntax(
          ID     INTEGER NOT NULL    IDENTITY( 100 ,3 )  PRIMARY KEY
         ,C1     AS( ID +1 ) PERSISTED
-);
+)
+;
+
+
+ALTER  DATABASE testdb  ADD FILEGROUP my_filegroup
+;
+DROP    TABLE   IF      EXISTS  Test_Tablespace_Syntax
+;
+CREATE  TABLE   IF  NOT EXISTS  Test_Tablespace_Syntax(
+        ID      INTEGER
+)
+ON      my_filegroup
+WITH(   DATA_COMPRESSION = PAGE )
+;

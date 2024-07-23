@@ -141,7 +141,15 @@ CREATE  TABLE   IF  NOT EXISTS  Test_Column_Syntax(
 
 DROP    TABLE   IF      EXISTS  Test_Generate_Syntax
 ;
-CREATE  TABLE   IF  NOT EXISTS  Test_generate_Syntax(
+CREATE  TABLE   IF  NOT EXISTS  Test_Generate_Syntax(
          ID     INTEGER         NOT NULL    GENERATED ALWAYS AS IDENTITY( START WITH 100 INCREMENT BY 3) PRIMARY KEY
         ,C1     INTEGER         NOT NULL    GENERATED ALWAYS AS( ID +1 )
 );
+
+DROP    TABLE   IF      EXISTS  Test_Tablespace_Syntax
+;
+CREATE  TABLE   IF  NOT EXISTS  Test_Tablespace_Syntax(
+        ID      INTEGER
+)
+IN      USERSPACE1      COMPRESS YES
+;

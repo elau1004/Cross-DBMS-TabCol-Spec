@@ -144,3 +144,12 @@ CREATE  TABLE   IF  NOT EXISTS  Test_generate_Syntax(
          ID     INTEGER         NOT NULL    GENERATED ALWAYS AS IDENTITY( START WITH 100 INCREMENT BY 3) PRIMARY KEY
         ,C1     INTEGER         NOT NULL    GENERATED ALWAYS AS( ID +1 )  STORED
 );
+
+
+DROP    TABLE   IF      EXISTS  Test_Tablespace_Syntax
+;
+CREATE  TABLE   IF  NOT EXISTS  Test_Tablespace_Syntax(
+        ID      INTEGER
+)
+TABLESPACE      pg_default
+;

@@ -1,16 +1,13 @@
-
 --  Test DB2 LUW data types.
 --  SEE: 
---$ mkdir  C:\Tmp\Gist\db2
---$ podman run --name db2 --privileged=true -dit -p 50000:50000 -e LICENSE=accept -e PERSISTENT_HOME=false -e DB2INST1_PASSWORD=Secret -e DBNAME=testdb -v C:/Tmp/Gist/db2:/database  icr.io/db2_community/db2:latest
+--$ mkdir  .\dbdata\db2
+--$ podman pull  icr.io/db2_community/db2:latest
+--$ podman run --hostname db2host --name db2 --privileged=true -dit -p 50000:50000 -e LICENSE=accept -e PERSISTENT_HOME=false -e DB2INST1_PASSWORD=Pa@55word -e DBNAME=testdb  icr.io/db2_community/db2
 --$ podman logs -f db2
 --      Username: db2inst1
---      Password: Secret
---      Database: testdb
+--      Password: Pa@55word
+--      Database: 
 --
---      On windows, don't mount the volume but pass in the envvar "PERSISTENT_HOME=false"
---
-
 DROP    TABLE   IF      EXISTS  Test_Data_Types
 ;
 CREATE  TABLE   IF  NOT EXISTS  Test_Data_Types(
@@ -29,7 +26,7 @@ CREATE  TABLE   IF  NOT EXISTS  Test_Data_Types(
         ,c013_decimal           DECIMAL                         --  
         ,c014_decimal_p         DECIMAL(1)                      --  
         ,c015_decimal_p_s       DECIMAL(2,1)                    --  
-        ,c016_decimal_31        DECIMAL(3,1)                    --  
+        ,c016_decimal_31        DECIMAL(31)                     --  
 --      ,c017_number            NUMBER                          --  
 --      ,c018_number_p          NUMBER(1)                       --  
 --      ,c019_number_p_s        NUMBER(2,1)                     --  
@@ -130,3 +127,21 @@ CREATE  TABLE   IF  NOT EXISTS  Test_Data_Types(
 --      ,c114_macaddr           MACADDR                         --  
 )
 ;
+
+
+DROP    TABLE   IF      EXISTS  Test_Column_Syntax
+;
+CREATE  TABLE   IF  NOT EXISTS  Test_Column_Syntax(
+         ID     INTEGER         NOT NULL    PRIMARY KEY
+        ,C1     CHAR(1)         NOT NULL    UNIQUE  CHECK( C1 <>'?')
+        ,C3     VARCHAR(256)                SECURED WITH sec_label
+        ,H0     TIMESTAMP                   DEFAULT CURRENT_TIMESTAMP   IMPLICITLY    HIDDEN
+);
+
+
+DROP    TABLE   IF      EXISTS  Test_Generate_Syntax
+;
+CREATE  TABLE   IF  NOT EXISTS  Test_generate_Syntax(
+         ID     INTEGER         NOT NULL    GENERATED ALWAYS AS IDENTITY( START WITH 100 INCREMENT BY 3) PRIMARY KEY
+        ,C1     INTEGER         NOT NULL    GENERATED ALWAYS AS( ID +1 )
+);

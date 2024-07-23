@@ -4,7 +4,7 @@ The following list out the most common TABLE features supported by the most popu
 |Features                                                                   |ANSI_99|DB2_LUW|Oracle |MS_SQL |SQLite |MySQL  |PostgreSQL|
 |---------------------------------------------------------------------------|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:------:|
 |**Create Table**:                                                          |       |       |       |       |       |       |        |
-|&nbsp; &nbsp;`IF NOT EXISTS`                                               | Y     | Y     |       |       | Y     | Y     | Y      |
+|&nbsp; &nbsp;`IF NOT EXISTS`                                               | Y     | Y     | Y     |       | Y     | Y     | Y      |
 |**Data Types**:                                                            |       |       |       |       |       |       |        |
 |&nbsp; &nbsp; Boolean Types:                                               |       |       |       |       |       |       |        |
 |&nbsp; &nbsp; &nbsp; &nbsp;`BOOLEAN`                                       | Y     | Y     |       |       |       | Y     | Y      |
@@ -123,12 +123,12 @@ The above are extracted out from the following:
 * MySQL:        https://dev.MySQL.com/doc/refman/8.4/en/data-types.html
 * PostgreSQL:   https://www.postgresql.org/docs/current/sql-createtable.html
 
-* JPA:          https://jakarta.ee/specifications/persistence/3.2/jakarta-persistence-spec-3.2
+* JPA (ORM):    https://jakarta.ee/specifications/persistence/3.2/jakarta-persistence-spec-3.2
 * Reference:    https://www.databasestar.com/sql-data-types/
 
-### sqlite
-* `sqlite` uses type affinity.  SEE: https://www.sqlite.org/datatype3.html#affinity
-    * Any name for the data type will be excepted by SQLite.
+### SQLite
+* `SQLite` uses type affinity.  SEE: https://www.sqlite.org/datatype3.html#affinity
+    * Any name for the data type will be accepted by SQLite.
 
 ## Data Types
 Always pick the data type that is adequate to store your values.  It is not just a syntax requirement, it is part of your documentation.
@@ -345,12 +345,12 @@ Always pick the data type that is adequate to store your values.  It is not just
 * DBMS specific ordering of column options.
     *   |DBMS       |Column Definition|
         |-----------|-----------------|
-        | DB2       | _colName_ _type_ `[NOT NULL]` `[UNIQUE\|PRIMARY KEY]` `[CHECK( _condition_ )]` `[DEFAULT _value_]` `[SECURED WITH _label_]` `[IMPLICITLY HIDDEN]`|
-        | Oracle    | _colName_ _type_ `[NOT NULL]` `[INVISIBLE]` `[DEFAULT _value_]` `[ENCRYPT _spec_]` `[NOT NULL]` `[CHECK( _condition_ )]` `[UNIQUE\|PRIMARY KEY]`|
-        | MS-SQL    | _colName_ _type_ `[NOT NULL]` `[DEFAULT _value_]` `[HIDDEN]` `[ENCRYPTED WITH( _spec_ )]` `[UNIQUE\|PRIMARY KEY]` `[CHECK( _condition_ )]`|
-        | SQLite    | _colName_ _type_ `[NOT NULL]` `[DEFAULT _value_]` `[HIDDEN]` `[CHECK( _condition_ )]` `[UNIQUE\|PRIMARY KEY]`|
-        | MySQL     | _colName_ _type_ `[NOT NULL]` `[DEFAULT _value_]` `[INVISIBLE]``[UNIQUE\|PRIMARY KEY]` `[COMMENT = 'string']` `[CHECK( _condition_ )]`|
-        | PostgreSQL| _colName_ _type_ `[NOT NULL]` `[DEFAULT _value_]` `[CHECK( _condition_ )]` `[UNIQUE\|PRIMARY KEY]`|
+        | DB2       | _colName_ _type_ `[NOT NULL]`  `[UNIQUE\|PRIMARY KEY]` `[CHECK( _condition_ )]` `[DEFAULT _value_]` `[SECURED WITH _label_]` `[IMPLICITLY HIDDEN]`|
+        | Oracle    | _colName_ _type_ `[INVISIBLE]` `[DEFAULT _value_]` `[ENCRYPT _spec_]` `[NOT NULL]` `[CHECK( _condition_ )]` `[UNIQUE\|PRIMARY KEY]`|
+        | MS-SQL    | _colName_ _type_ `[NOT NULL]`  `[DEFAULT _value_]` `[HIDDEN]` `[ENCRYPTED WITH( _spec_ )]` `[CHECK( _condition_ )]` `[UNIQUE\|PRIMARY KEY]`|
+        | SQLite    | _colName_ _type_ `[NOT NULL]`  `[DEFAULT _value_]` `[HIDDEN]` `[CHECK( _condition_ )]` `[UNIQUE\|PRIMARY KEY]`|
+        | MySQL     | _colName_ _type_ `[NOT NULL]`  `[DEFAULT _value_]` `[INVISIBLE]` `[CHECK( _condition_ )]` `[UNIQUE\|PRIMARY KEY]` `[COMMENT = 'string']`|
+        | PostgreSQL| _colName_ _type_ `[NOT NULL]`  `[DEFAULT _value_]` `[CHECK( _condition_ )]` `[UNIQUE\|PRIMARY KEY]`|
 
 ## Generated Column
 * DBMS specific ordering of generated column options.
@@ -369,12 +369,12 @@ Always pick the data type that is adequate to store your values.  It is not just
 * DBMS specific identity column options.
     *   |DBMS       |Column Definition|
         |-----------|-----------------|
-        | DB2       | _colName_ _type_ `GENERATED ALWAYS AS IDENTITY START WITH` _start_ `INCREMENT BY ` _incr_|
-        | Oracle    | _colName_ _type_ `GENERATED ALWAYS AS IDENTITY START WITH` _start_ `INCREMENT BY ` _incr_|
-        | MS-SQL    | _colName_ _type_ `IDENTITY(` _start_ ,_increment_ `)`|
+        | DB2       | _colName_ _type_ `GENERATED ALWAYS AS IDENTITY( START WITH` _start_ `INCREMENT BY ` _incr_` ) PRIMARY KEY`|
+        | Oracle    | _colName_ _type_ `GENERATED ALWAYS AS IDENTITY( START WITH` _start_ `INCREMENT BY ` _incr_` ) PRIMARY KEY`|
+        | MS-SQL    | _colName_ _type_ `IDENTITY(` _start_ ,_increment_ `) PRIMARY KEY`|
         | SQLite    | _colName_ _type_ `PRIMARY KEY AUTOINCREMENT`|
-        | MySQL     | _colName_ _type_ `AUTO_INCREMENT = ` _start_|
-        | PostgreSQL| _colName_ _type_ `GENERATED ALWAYS AS IDENTITY( INCREMENT BY ` _incr_ `START WITH` _start_ `)`|
+        | MySQL     | _colName_ _type_ `AUTO_INCREMENT PRIMARY KEY` |
+        | PostgreSQL| _colName_ _type_ `GENERATED ALWAYS AS IDENTITY( INCREMENT BY ` _incr_ `START WITH` _start_ ` )`|
         * Identity value defaults to start at **1**.  However, I recommend that it start at higher number depending on the data type. **10** or **100** are good candidates.  Starting at a higher number is akin to the stack memory where it is reserved for system seeded values.
         * SQLite starting need to be updated in the system table `sqlite_sequence` as follows:
             * `UPDATE sqlite_sequence SET seq = 100 WHERE NAME = ` 'tableName'`;`
@@ -466,11 +466,11 @@ Always pick the data type that is adequate to store your values.  It is not just
     |long double                    |16  | Y |   |   |    |      |    |   |   | |`NUMERIC(p,s)`|`NUMBER(p,s)`  |`NUMERIC(p,s)`|`REAL`|`DECIMAL(p,s)`|`NUMERIC(p,s)`|
     |                               |    |   |   |   |    |      |    |   |   | |              |               |              |      |              |              |
     * Above listed DBMS do **not** support unsigned numbers therefore unsigned numbers from your programming language will need to be promoted to a larger storage and the value be checked before it is persisted into the table.
-        * <sup>a</sup>  CHECK( _colName_ BETWEEN 0 AND 255 )
-        * <sup>b</sup>  CHECK( _colName_ BETWEEN 0 AND 65535 )
-        * <sup>c</sup>  CHECK( _colName_ BETWEEN 0 AND 4294967295 )
-        * <sup>d</sup>  CHECK( _colName_ BETWEEN 0 AND 18446744073709551615)
-        * <sup>e</sup>  CHECK( _colName_ BETWEEN 0 AND 340282366920938463463374607431768211455)
+        * <sup>a</sup>  `CHECK( _colName_ BETWEEN 0 AND 255 )`
+        * <sup>b</sup>  `CHECK( _colName_ BETWEEN 0 AND 65535 )`
+        * <sup>c</sup>  `CHECK( _colName_ BETWEEN 0 AND 4294967295 )`
+        * <sup>d</sup>  `CHECK( _colName_ BETWEEN 0 AND 18446744073709551615)`
+        * <sup>e</sup>  `CHECK( _colName_ BETWEEN 0 AND 340282366920938463463374607431768211455)`
 
 *   |Compound Type|DB2              |Oracle          |MS-SQL           |SQLite         |MySQL            |PostgreSQL     |
     |-------------|-----------------|----------------|-----------------|---------------|-----------------|---------------|

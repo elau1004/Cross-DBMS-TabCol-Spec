@@ -1,9 +1,11 @@
 --  Test MySQL data types.
 --  SEE: https://youtu.be/kphq2TsVRIs?t=162
---$ mkdir  C:\Tmp\Gist\mysql
---$ podman run --name mysql -dit -p 3306:3306 -e MYSQL_ROOT_PASSWORD=Secret -v C:\Tmp\Gist\mysql:/var/lib/mysql  mysql:latest
+--$ mkdir  .\dbdata\mysql
+--$ podman pull   mysql:latest
+--$ podman run  --hostname mysqlhost --name mysql --privileged=true -dit -p 3306:3306 -e MYSQL_ROOT_PASSWORD=Pa@55word  mysql
+--$ podman logs -f mysql
 --      Username: root
---      Password: Secret
+--      Password: Pa@55word
 --      Database: 
 --
 DROP    TABLE   IF      EXISTS  Test_Data_Types
@@ -24,7 +26,7 @@ CREATE  TABLE   IF  NOT EXISTS  Test_Data_Types(
         ,c013_decimal           DECIMAL                         --  
         ,c014_decimal_p         DECIMAL(1)                      --  
         ,c015_decimal_p_s       DECIMAL(2,1)                    --  
-        ,c016_decimal_31        DECIMAL(3,1)                    --  
+        ,c016_decimal_31        DECIMAL(31)                     --  
 --      ,c017_number            NUMBER                          --  
 --      ,c018_number_p          NUMBER(1)                       --  
 --      ,c019_number_p_s        NUMBER(2,1)                     --  
@@ -123,4 +125,23 @@ CREATE  TABLE   IF  NOT EXISTS  Test_Data_Types(
 --      ,c112_cidr              CIDR                            --  
 --      ,c113_inet              INET                            --  
 --      ,c114_macaddr           MACADDR                         --  
+);
+
+
+
+DROP    TABLE   IF      EXISTS  Test_Column_Syntax
+;
+CREATE  TABLE   IF  NOT EXISTS  Test_Column_Syntax(
+         ID     INTEGER         NOT NULL    DEFAULT 1  CHECK( ID > 0 )  PRIMARY KEY
+        ,C1     CHAR(1)         NOT NULL               CHECK( C1 <>'?') UNIQUE
+--      ,C2     DECIMAL(10, 2)              ENCRYPTED WITH( COLUMN_ENCRYPTION_KEY = key_name ,ENCRYPTION_TYPE = DETERMINISTIC ,ALGORITHM = 'AEAD_AES_256_CBC_HMAC_SHA_256') 
+        ,H0     TIMESTAMP                   DEFAULT CURRENT_TIMESTAMP   INVISIBLE   COMMENT 'is Hidden'
+);
+
+
+DROP    TABLE   IF      EXISTS  Test_Generate_Syntax
+;
+CREATE  TABLE   IF  NOT EXISTS  Test_generate_Syntax(
+         ID     INTEGER         NOT NULL    AUTO_INCREMENT   PRIMARY KEY
+        ,C1     INTEGER                     GENERATED ALWAYS AS( ID +1 ) VIRTUAL NOT NULL       
 );

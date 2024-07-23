@@ -121,6 +121,7 @@ CREATE  TABLE   IF  NOT EXISTS  Test_Data_Types(
 --      ,c108_uuid              UUID                            --  
 --      ,c109_uniqueidentifier  UNIQUEIDENTIFIER                --
         ,c110_json              JSON                            --  
+--      ,c110_vjson             VARCHAR2(4000) CHECK( c110_vjson IS JSON )  --  Version < 21c  
 --      ,c111_xml               XML                             --  
 --      ,c112_cidr              CIDR                            --  
 --      ,c113_inet              INET                            --  
@@ -136,7 +137,8 @@ CREATE  TABLE   IF  NOT EXISTS  Test_Column_Syntax(
         ,C1     CHAR(1)                                 NOT NULL    UNIQUE  CHECK( C1 <> '?' )
         ,C2     DECIMAL(10, 2)  ENCRYPT     USING  'AES256' IDENTIFY BY 'my_enc_key'
         ,H0     TIMESTAMP       INVISIBLE   DEFAULT CURRENT_TIMESTAMP   
-);
+)
+;
 
 
 DROP    TABLE   Test_Generate_Syntax
@@ -144,7 +146,8 @@ DROP    TABLE   Test_Generate_Syntax
 CREATE  TABLE   Test_generate_Syntax(
          ID     INTEGER         GENERATED ALWAYS AS IDENTITY( START WITH 100 INCREMENT BY 3) NOT NULL PRIMARY KEY 
         ,C1     INTEGER         GENERATED ALWAYS AS( ID +1 )  VIRTUAL                        NOT NULL 
-);
+)
+;
 
 
 DROP    TABLE   IF      EXISTS  Test_Tablespace_Syntax

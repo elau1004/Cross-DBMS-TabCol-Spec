@@ -488,6 +488,6 @@ Always pick the data type that is adequate to store your values.  It is not just
     |             |                 |                |                 |               |                 |               |
     * Oracle could store the time as the number of seconds (86400) since midnight.
 
-* ORM framework should support as many features, either directly or mappable, outline above.
+* ORM framework should support as many features outlined above.
 
 

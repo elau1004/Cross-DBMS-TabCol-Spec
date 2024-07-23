@@ -166,7 +166,7 @@ Always pick the data type that is adequate to store your values.  It is not just
         | DB2       |`SMALLINT`|`SMALLINT`|`SMALLINT`|`INTEGER`|`INTEGER`|`DECIMAL(10)`|`DECIMAL(20)`|`DECIMAL(20)`|`DECIMAL(31)`|`DECIMAL(31)`|
         | Oracle    |`SMALLINT`|`SMALLINT`|`SMALLINT`|`INTEGER`|`INTEGER`|`NUMBER(10)` |`NUMBER(20)` |`NUMBER(20)` |`NUMBER(31)` |`NUMBER(31)` |
         | MS-SQL    |`TINYINT` |`SMALLINT`|`SMALLINT`|`INTEGER`|`INTEGER`|`BIGINT`     |`BIGINT`     |`NUMERIC(20)`|`NUMERIC(31)`|`NUMERIC(31)`|
-        | SQLite    |`INTEGER` |`INTEGER` |`INTEGER` |`INTEGER`|`INTEGER`|`INTEGER`    |`INTEGER`    |`INTEGER`    |`INTEGER`    |`INT`        |
+        | SQLite    |`INTEGER` |`INTEGER` |`INTEGER` |`INTEGER`|`INTEGER`|`INTEGER`    |`INTEGER`    |`INTEGER`    |`INTEGER`    |`INTEGER`    |
         | MySQL     |`TINYINT` |`TINYINT` |`TINYINT` |`INTEGER`|`INTEGER`|`BIGINT`     |`BIGINT`     |`DECIMAL(20)`|`DECIMAL(31)`|`DECIMAL(31)`|
         | PostgreSQL|`SMALLINT`|`SMALLINT`|`SMALLINT`|`INTEGER`|`INTEGER`|`BIGINT`     |`BIGINT`     |`NUMERIC(20)`|`NUMERIC(31)`|`NUMERIC(31)`|
 * Unsigned integer will need to be promoted to a larger storage and the value be checked.

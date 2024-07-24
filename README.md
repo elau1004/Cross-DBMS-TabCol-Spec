@@ -444,43 +444,45 @@ Always pick the data type that is adequate to store your values.  It is not just
 
 # Recommendations for ORM frameworks
 * To be compatible across these DBMS, unfortunately, we should code to the lowest common denominator when we map from a programming language into a table:
-*   |Primitives Type                |Size| C |C# |GO |Java|Python|Rust| V |Zig| |DB2           |Oracle         |MS-SQL        |SQLite   |MySQL         |PostgreSQL |
-    |-------------------------------|:--:|:-:|:-:|:-:|:--:|:----:|:--:|:-:|:-:|-|--------------|---------------|--------------|---------|--------------|------------|
-    |bool \ boolean                 | 1  | Y | Y | Y | Y  | Y    | Y  | Y | Y | |`BOOLEAN`     |`NUMBER(1)`    |`BIT`         |`INTEGER`|`BOOLEAN`     |`BOOLEAN`   |
-    |byte                           | 1  |   | Y | Y | Y  |      |    |   |   | |`GRAPHIC(1)`  |`RAW(1)`       |`VARBINARY(1)`|`BLOB`   |`BINARY(1)`   |`BIT(1)`    |
-    |sbyte                          | 1  |   | Y |   |    |      |    |   |   | |`SMALLINT`    |`SMALLINT`     |`TINYINT`     |`INTEGER`|`TINYINT`     |`SMALLINT`  |
-    |char <sup>1</sup>              | 1  | Y |   |   |    |      |    |   |   | |`CHAR(1)`     |`CHAR(1)`      |`CHAR(1)`     |`TEXT`   |`CHAR(1)`     |`CHAR(1)`   |
-    |char <sup>2</sup>              | 2  |   | Y |   | Y  |      | Y  |   |   | |`CHAR(2)`     |`CHAR(2)`      |`CHAR(2)`     |`TEXT`   |`CHAR(2)`     |`CHAR(2)`   |
-    |i8                             | 1  |   |   | Y |    |      | Y  | Y | Y | |`SMALLINT`    |`SMALLINT`     |`TINYINT`     |`INTEGER`|`TINYINT`     |`SMALLINT`  |
-    |u8 <sup>a</sup>                | 1  |   |   | Y |    |      | Y  | Y | Y | |`SMALLINT`    |`SMALLINT`     |`SMALLINT`    |`INTEGER`|`SMALLINT`    |`SMALLINT`  |
-    |i16                            | 2  |   |   | Y |    |      | Y  | Y | Y | |`SMALLINT`    |`SMALLINT`     |`SMALLINT`    |`INTEGER`|`SMALLINT`    |`SMALLINT`  |
-    |u16 <sup>b</sup>               | 2  |   |   | Y |    |      | Y  | Y | Y | |`INTEGER`     |`INTEGER`      |`INTEGER`     |`INTEGER`|`INTEGER`     |`INTEGER`   |
-    |i32                            | 4  |   |   | Y |    |      | Y  | Y | Y | |`INTEGER`     |`INTEGER`      |`INTEGER`     |`INTEGER`|`INTEGER`     |`INTEGER`   |
-    |u32 <sup>c</sup>               | 4  |   |   | Y |    |      | Y  | Y | Y | |`DECIMAL(10)` |`NUMBER(10)`   |`BIGINT`      |`INTEGER`|`BIGINT`      |`BIGINT`    |
-    |i64                            | 8  |   |   | Y |    |      | Y  | Y | Y | |`DECIMAL(20)` |`NUMBER(20)`   |`BIGINT`      |`INTEGER`|`BIGINT`      |`BIGINT`    |
-    |u64 <sup>d</sup>               | 8  |   |   | Y |    |      | Y  | Y | Y | |`DECIMAL(20)` |`NUMBER(20)`   |`NUMERIC(20)` |`INTEGER`|`DECIMAL(20)` |`NUMERIC(20)`|
-    |i128                           | 8  |   |   |   |    |      | Y  |_Y_| Y | |`DECIMAL(31)` |`NUMBER(31)`   |`NUMERIC(31)` |`INTEGER`|`DECIMAL(31)` |`NUMERIC(31)`|
-    |u128 <sup>e</sup>              | 8  |   |   |   |    |      | Y  |_Y_| Y | |`DECIMAL(31)` |`NUMBER(31)`   |`NUMERIC(31)` |`INTEGER`|`DECIMAL(31)` |`NUMERIC(31)`|
-    |short                          | 2  | Y | Y |   | Y  |      |    |   |   | |`SMALLINT`    |`SMALLINT`     |`SMALLINT`    |`INTEGER`|`SMALLINT`    |`SMALLINT`  |
-    |ushort <sup>b</sup>            | 2  |   | Y |   |    |      |    |   |   | |`INTEGER`     |`INTEGER`      |`INTEGER`     |`INTEGER`|`INTEGER`     |`INTEGER`   |
-    |unsigned short <sup>b</sup>    | 2  |   |   |   |    |      |    |   |   | |`INTEGER`     |`INTEGER`      |`INTEGER`     |`INTEGER`|`INTEGER`     |`INTEGER`   |
-    |int                            | 4  | Y | Y | Y | Y  | Y    |    | Y |   | |`INTEGER`     |`INTEGER`      |`INTEGER`     |`INTEGER`|`INTEGER`     |`INTEGER`   |
-    |uint <sup>c</sup>              | 4  |   | Y | Y |    |      |    |   |   | |`DECIMAL(10)` |`NUMBER(10)`   |`NUMERIC(10)` |`NUMBER` |`DECIMAL(10)` |`BIGINT`    |
-    |unsigned int <sup>c</sup>      | 4  | Y |   |   |    |      |    |   |   | |`DECIMAL(10)` |`NUMBER(10)`   |`NUMERIC(10)` |`NUMBER` |`DECIMAL(10)` |`BIGINT`    |
-    |long                           | 8  | Y | Y |   | Y  |      |    |   |   | |`DECIMAL(20)` |`NUMBER(20)`   |`NUMERIC(20)` |`NUMBER` |`DECIMAL(20)` |`NUMBER(20)`|
-    |ulong <sup>e</sup>             | 8  |   | Y |   |    |      |    |   |   | |`DECIMAL(20)` |`NUMBER(20)`   |`NUMERIC(20)` |`NUMBER` |`DECIMAL(20)` |`NUMBER(20)`|
-    |unsigned long <sup>e</sup>     | 8  | Y |   |   |    |      |    |   |   | |`DECIMAL(20)` |`NUMBER(20)`   |`NUMERIC(20)` |`NUMBER` |`DECIMAL(20)` |`NUMBER(20)`|
-    |long long                      |16  | Y |   |   |    |      |    |   |   | |`DECIMAL(31)` |`NUMBER(31)`   |`NUMERIC(31)` |`NUMBER` |`DECIMAL(31)` |`NUMBER(31)`|
-    |unsigned long long <sup>e</sup>|16  | Y |   |   |    |      |    |   |   | |`DECIMAL(31)` |`NUMBER(31)`   |`NUMERIC(31)` |`NUMBER` |`DECIMAL(31)` |`NUMBER(31)`|
-    |f16                            | 4  |   |   |   |    |      |    |   | Y | |`REAL`        |`BINARY_FLOAT` |`REAL`        |`REAL`   |`REAL`        |`REAL`      |
-    |f32 \ float32                  | 4  |   |   | Y |    |      | Y  | Y | Y | |`REAL`        |`BINARY_FLOAT` |`REAL`        |`REAL`   |`REAL`        |`REAL`      |
-    |f64 \ float64                  | 8  |   |   | Y |    |      | Y  | Y | Y | |`DOUBLE`      |`BINARY_DOUBLE`|`FLOAT`       |`REAL`   |`DOUBLE`      |`DOUBLE PRECISION`|
-    |float                          | 4  | Y | Y |   | Y  | Y    |    |   |   | |`REAL`        |`BINARY_FLOAT` |`REAL`        |`REAL`   |`REAL`        |`REAL`      |
-    |double                         | 8  | Y | Y |   | Y  |      |    |   |   | |`DOUBLE`      |`BINARY_DOUBLE`|`FLOAT`       |`REAL`   |`DOUBLE`      |`DOUBLE PRECISION`|
-    |decimal                        |    |   | Y |   |    |      |    |   |   | |`NUMERIC(p,s)`|`NUMBER(p,s)`  |`NUMERIC(p,s)`|`REAL`   |`DECIMAL(p,s)`|`NUMERIC(p,s)`|
-    |long double                    |16  | Y |   |   |    |      |    |   |   | |`NUMERIC(p,s)`|`NUMBER(p,s)`  |`NUMERIC(p,s)`|`REAL`   |`DECIMAL(p,s)`|`NUMERIC(p,s)`|
-    |                               |    |   |   |   |    |      |    |   |   | |              |               |              |         |              |              |
+*   |Primitives Type                | C |C# |GO |Java|Python|Rust| V |Zig|DB2           |Oracle         |MS-SQL        |SQLite      |MySQL         |PostgreSQL |
+    |-------------------------------|:-:|:-:|:-:|:--:|:----:|:--:|:-:|:-:|--------------|---------------|--------------|------------|--------------|------------|
+    |bool \ boolean                 | Y | Y | Y | Y  | Y    | Y  | Y | Y |`BOOLEAN`     |`NUMBER(1)`    |`BIT`         |`INTEGER`   |`BOOLEAN`     |`BOOLEAN`   |
+    |byte                           |   | Y | Y | Y  |      |    |   |   |`GRAPHIC(1)`  |`RAW(1)`       |`VARBINARY(1)`|`BLOB`      |`BINARY(1)`   |`BIT(1)`    |
+    |sbyte                          |   | Y |   |    |      |    |   |   |`SMALLINT`    |`SMALLINT`     |`TINYINT`     |`INTEGER`   |`TINYINT`     |`SMALLINT`  |
+    |char <sup>1</sup>              | Y |   |   |    |      |    |   |   |`CHAR(1)`     |`CHAR(1)`      |`CHAR(1)`     |`TEXT`      |`CHAR(1)`     |`CHAR(1)`   |
+    |char <sup>2</sup>              |   | Y |   | Y  |      | Y  |   |   |`CHAR(2)`     |`CHAR(2)`      |`CHAR(2)`     |`TEXT`      |`CHAR(2)`     |`CHAR(2)`   |
+    |i8                             |   |   | Y |    |      | Y  | Y | Y |`SMALLINT`    |`SMALLINT`     |`TINYINT`     |`INTEGER`   |`TINYINT`     |`SMALLINT`  |
+    |u8 <sup>a</sup>                |   |   | Y |    |      | Y  | Y | Y |`SMALLINT`    |`SMALLINT`     |`SMALLINT`    |`INTEGER`   |`SMALLINT`    |`SMALLINT`  |
+    |i16                            |   |   | Y |    |      | Y  | Y | Y |`SMALLINT`    |`SMALLINT`     |`SMALLINT`    |`INTEGER`   |`SMALLINT`    |`SMALLINT`  |
+    |u16 <sup>b</sup>               |   |   | Y |    |      | Y  | Y | Y |`INTEGER`     |`INTEGER`      |`INTEGER`     |`INTEGER`   |`INTEGER`     |`INTEGER`   |
+    |i32                            |   |   | Y |    |      | Y  | Y | Y |`INTEGER`     |`INTEGER`      |`INTEGER`     |`INTEGER`   |`INTEGER`     |`INTEGER`   |
+    |u32 <sup>c</sup>               |   |   | Y |    |      | Y  | Y | Y |`DECIMAL(10)` |`NUMBER(10)`   |`BIGINT`      |`INTEGER`   |`BIGINT`      |`BIGINT`    |
+    |i64                            |   |   | Y |    |      | Y  | Y | Y |`DECIMAL(20)` |`NUMBER(20)`   |`BIGINT`      |`INTEGER`   |`BIGINT`      |`BIGINT`    |
+    |u64 <sup>d</sup>               |   |   | Y |    |      | Y  | Y | Y |`DECIMAL(20)` |`NUMBER(20)`   |`NUMERIC(20)` |`INTEGER`   |`DECIMAL(20)` |`NUMERIC(20)`|
+    |i128                           |   |   |   |    |      | Y  |_Y_| Y |`DECIMAL(31)` |`NUMBER(31)`   |`NUMERIC(31)` |`INTEGER`   |`DECIMAL(31)` |`NUMERIC(31)`|
+    |u128 <sup>e</sup>              |   |   |   |    |      | Y  |_Y_| Y |`DECIMAL(31)` |`NUMBER(31)`   |`NUMERIC(31)` |`INTEGER`   |`DECIMAL(31)` |`NUMERIC(31)`|
+    |short                          | Y | Y |   | Y  |      |    |   |   |`SMALLINT`    |`SMALLINT`     |`SMALLINT`    |`INTEGER`   |`SMALLINT`    |`SMALLINT`  |
+    |ushort <sup>b</sup>            |   | Y |   |    |      |    |   |   |`INTEGER`     |`INTEGER`      |`INTEGER`     |`INTEGER`   |`INTEGER`     |`INTEGER`   |
+    |unsigned short <sup>b</sup>    |   |   |   |    |      |    |   |   |`INTEGER`     |`INTEGER`      |`INTEGER`     |`INTEGER`   |`INTEGER`     |`INTEGER`   |
+    |int                            | Y | Y | Y | Y  | Y    |    | Y |   |`INTEGER`     |`INTEGER`      |`INTEGER`     |`INTEGER`   |`INTEGER`     |`INTEGER`   |
+    |uint <sup>c</sup>              |   | Y | Y |    |      |    |   |   |`DECIMAL(10)` |`NUMBER(10)`   |`NUMERIC(10)` |`NUMBER(10)`|`DECIMAL(10)` |`BIGINT`    |
+    |unsigned int <sup>c</sup>      | Y |   |   |    |      |    |   |   |`DECIMAL(10)` |`NUMBER(10)`   |`NUMERIC(10)` |`NUMBER(10)`|`DECIMAL(10)` |`BIGINT`    |
+    |long                           | Y | Y |   | Y  |      |    |   |   |`DECIMAL(20)` |`NUMBER(20)`   |`NUMERIC(20)` |`NUMBER(20)`|`DECIMAL(20)` |`NUMBER(20)`|
+    |ulong <sup>e</sup>             |   | Y |   |    |      |    |   |   |`DECIMAL(20)` |`NUMBER(20)`   |`NUMERIC(20)` |`NUMBER(20)`|`DECIMAL(20)` |`NUMBER(20)`|
+    |unsigned long <sup>e</sup>     | Y |   |   |    |      |    |   |   |`DECIMAL(20)` |`NUMBER(20)`   |`NUMERIC(20)` |`NUMBER(20)`|`DECIMAL(20)` |`NUMBER(20)`|
+    |long long                      | Y |   |   |    |      |    |   |   |`DECIMAL(31)` |`NUMBER(31)`   |`NUMERIC(31)` |`NUMBER(31)`|`DECIMAL(31)` |`NUMBER(31)`|
+    |unsigned long long <sup>e</sup>| Y |   |   |    |      |    |   |   |`DECIMAL(31)` |`NUMBER(31)`   |`NUMERIC(31)` |`NUMBER(31)`|`DECIMAL(31)` |`NUMBER(31)`|
+    |f16                            |   |   |   |    |      |    |   | Y |`REAL`        |`BINARY_FLOAT` |`REAL`        |`REAL`      |`REAL`        |`REAL`      |
+    |f32 \ float32                  |   |   | Y |    |      | Y  | Y | Y |`REAL`        |`BINARY_FLOAT` |`REAL`        |`REAL`      |`REAL`        |`REAL`      |
+    |f64 \ float64                  |   |   | Y |    |      | Y  | Y | Y |`DOUBLE`      |`BINARY_DOUBLE`|`FLOAT`       |`REAL`      |`DOUBLE`      |`DOUBLE PRECISION`|
+    |float                          | Y | Y |   | Y  | Y    |    |   |   |`REAL`        |`BINARY_FLOAT` |`REAL`        |`REAL`      |`REAL`        |`REAL`      |
+    |double                         | Y | Y |   | Y  |      |    |   |   |`DOUBLE`      |`BINARY_DOUBLE`|`FLOAT`       |`REAL`      |`DOUBLE`      |`DOUBLE PRECISION`|
+    |decimal                        |   | Y |   |    |      |    |   |   |`NUMERIC(p,s)`|`NUMBER(p,s)`  |`NUMERIC(p,s)`|`REAL`      |`DECIMAL(p,s)`|`NUMERIC(p,s)`|
+    |long double                    | Y |   |   |    |      |    |   |   |`NUMERIC(p,s)`|`NUMBER(p,s)`  |`NUMERIC(p,s)`|`REAL`      |`DECIMAL(p,s)`|`NUMERIC(p,s)`|
+    |                               |   |   |   |    |      |    |   |   |              |               |              |            |              |              |
     * Above listed DBMS do **not** support unsigned numbers therefore unsigned numbers from your programming language will need to be promoted to a larger storage and the value be checked before it is persisted into the table.
+        * <sup>1</sup> 1 byte character.
+        * <sup>2</sup> 2 bytes character.
         * <sup>a</sup>  `CHECK( _colName_ BETWEEN 0 AND 255 )`
         * <sup>b</sup>  `CHECK( _colName_ BETWEEN 0 AND 65535 )`
         * <sup>c</sup>  `CHECK( _colName_ BETWEEN 0 AND 4294967295 )`

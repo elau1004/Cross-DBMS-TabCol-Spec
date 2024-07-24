@@ -481,13 +481,13 @@ Always pick the data type that is adequate to store your values.  It is not just
     |long double                    | Y |   |   |    |      |    |   |   |`NUMERIC(p,s)`|`NUMBER(p,s)`  |`NUMERIC(p,s)`|`REAL`      |`DECIMAL(p,s)`|`NUMERIC(p,s)`|
     |                               |   |   |   |    |      |    |   |   |              |               |              |            |              |              |
     * Above listed DBMS do **not** support unsigned numbers therefore unsigned numbers from your programming language will need to be promoted to a larger storage and the value be checked before it is persisted into the table.
-        * <sup>1</sup> 1 byte character.
-        * <sup>2</sup> 2 bytes character.
-        * <sup>a</sup>  `CHECK( _colName_ BETWEEN 0 AND 255 )`
-        * <sup>b</sup>  `CHECK( _colName_ BETWEEN 0 AND 65535 )`
-        * <sup>c</sup>  `CHECK( _colName_ BETWEEN 0 AND 4294967295 )`
-        * <sup>d</sup>  `CHECK( _colName_ BETWEEN 0 AND 18446744073709551615 )`
-        * <sup>e</sup>  `CHECK( _colName_ BETWEEN 0 AND 340282366920938463463374607431768211455 )`
+        * <sup>1</sup> &nbsp;&nbsp;1 byte character.
+        * <sup>2</sup> &nbsp;&nbsp;2 bytes character.
+        * <sup>a</sup> &nbsp;&nbsp;1 bytes use constraint `CHECK( _colName_ BETWEEN 0 AND 255 )`
+        * <sup>b</sup> &nbsp;&nbsp;2 bytes use constraint  `CHECK( _colName_ BETWEEN 0 AND 65535 )`
+        * <sup>c</sup> &nbsp;&nbsp;4 bytes use constraint  `CHECK( _colName_ BETWEEN 0 AND 4294967295 )`
+        * <sup>d</sup> &nbsp;&nbsp;8 bytes use constraint  `CHECK( _colName_ BETWEEN 0 AND 18446744073709551615 )`
+        * <sup>e</sup> 16 bytes use constraint  `CHECK( _colName_ BETWEEN 0 AND 340282366920938463463374607431768211455 )`
 
 *   |Compound Type|DB2              |Oracle          |MS-SQL           |SQLite         |MySQL            |PostgreSQL     |
     |-------------|-----------------|----------------|-----------------|---------------|-----------------|---------------|

@@ -358,23 +358,23 @@ Always pick the data type that is adequate to store your values.  It is not just
 * DBMS specific ordering of column options.
     *   |DBMS       |Column Definition|
         |-----------|-----------------|
-        | DB2       | _colName_ _type_ `[NOT NULL]`  `[UNIQUE\|PRIMARY KEY]` `[CHECK( _condition_ )]` `[DEFAULT _value_]` `[SECURED WITH _label_]` `[IMPLICITLY HIDDEN]`|
-        | Oracle    | _colName_ _type_ `[INVISIBLE]` `[DEFAULT _value_]` `[ENCRYPT _spec_]` `[NOT NULL]` `[CHECK( _condition_ )]` `[UNIQUE\|PRIMARY KEY]`|
-        | MS-SQL    | _colName_ _type_ `[NOT NULL]`  `[DEFAULT _value_]` `[HIDDEN]` `[ENCRYPTED WITH( _spec_ )]` `[CHECK( _condition_ )]` `[UNIQUE\|PRIMARY KEY]`|
-        | SQLite    | _colName_ _type_ `[NOT NULL]`  `[DEFAULT _value_]` `[HIDDEN]` `[CHECK( _condition_ )]` `[UNIQUE\|PRIMARY KEY]`|
-        | MySQL     | _colName_ _type_ `[NOT NULL]`  `[DEFAULT _value_]` `[INVISIBLE]` `[CHECK( _condition_ )]` `[UNIQUE\|PRIMARY KEY]` `[COMMENT = 'string']`|
-        | PostgreSQL| _colName_ _type_ `[NOT NULL]`  `[DEFAULT _value_]` `[CHECK( _condition_ )]` `[UNIQUE\|PRIMARY KEY]`|
+        | DB2       | _colName_ _type_ `[NOT NULL]  [UNIQUE\|PRIMARY KEY]` `[CHECK(` _condition_ `)] [DEFAULT` _value_ `] [SECURED WITH` _label_ `] [IMPLICITLY HIDDEN]`|
+        | Oracle    | _colName_ _type_ `[INVISIBLE] [DEFAULT` _value_ `] [ENCRYPT `_spec_ `] [NOT NULL] [CHECK(` _condition_ `)] [UNIQUE\|PRIMARY KEY]`|
+        | MS-SQL    | _colName_ _type_ `[NOT NULL]  [DEFAULT` _value_ `] [HIDDEN]` `[ENCRYPTED WITH(` _spec_ `)] [CHECK(` _condition_ `)] [UNIQUE\|PRIMARY KEY]`|
+        | SQLite    | _colName_ _type_ `[NOT NULL]  [DEFAULT` _value_ `] [HIDDEN]` `[CHECK(` _condition_ `)] [UNIQUE\|PRIMARY KEY]`|
+        | MySQL     | _colName_ _type_ `[NOT NULL]  [DEFAULT` _value_ `] [INVISIBLE]` `[CHECK(` _condition_ `)] [UNIQUE\|PRIMARY KEY] [COMMENT =` 'string' `]`|
+        | PostgreSQL| _colName_ _type_ `[NOT NULL]  [DEFAULT` _value_ `] [CHECK(` _condition_ `)] [UNIQUE\|PRIMARY KEY]`|
 
 ## Generated Column
 * DBMS specific ordering of generated column options.
     *   |DBMS       |Column Definition|
         |-----------|-----------------|
-        | DB2       | _colName_ _type_ `GENERATED ALWAYS AS( _expr_ )`|
-        | Oracle    | _colName_ _type_ `GENERATED ALWAYS AS( _expr_ ) VIRTUAL`|
-        | MS-SQL    | _colName_                         `AS( _expr_ ) [PERSISTED]`|
-        | SQLite    | _colName_ _type_ `GENERATED ALWAYS AS( _expr_ ) [VIRTUAL\|STORED]`|
-        | MySQL     | _colName_ _type_ `GENERATED ALWAYS AS( _expr_ ) [VIRTUAL\|STORED]`|
-        | PostgreSQL| _colName_ _type_ `GENERATED ALWAYS AS( _expr_ ) STORED`|
+        | DB2       | _colName_ _type_ `GENERATED ALWAYS AS(` _expr_ `)`|
+        | Oracle    | _colName_ _type_ `GENERATED ALWAYS AS(` _expr_ `) VIRTUAL`|
+        | MS-SQL    | _colName_                         `AS(` _expr_ `) [PERSISTED]`|
+        | SQLite    | _colName_ _type_ `GENERATED ALWAYS AS(` _expr_ `) [VIRTUAL\|STORED]`|
+        | MySQL     | _colName_ _type_ `GENERATED ALWAYS AS(` _expr_ `) [VIRTUAL\|STORED]`|
+        | PostgreSQL| _colName_ _type_ `GENERATED ALWAYS AS(` _expr_ `) STORED`|
         * Oracle virtual column cannot be stored.
         * PostgreSQL does not have virtual column.  Generated column is concrete and the data is stored in the row.
 
@@ -382,12 +382,12 @@ Always pick the data type that is adequate to store your values.  It is not just
 * DBMS specific identity column options.
     *   |DBMS       |Column Definition|
         |-----------|-----------------|
-        | DB2       | _colName_ _type_ `GENERATED ALWAYS AS IDENTITY( START WITH` _start_ `INCREMENT BY ` _incr_ `) PRIMARY KEY`|
-        | Oracle    | _colName_ _type_ `GENERATED ALWAYS AS IDENTITY( START WITH` _start_ `INCREMENT BY ` _incr_ `) PRIMARY KEY`|
+        | DB2       | _colName_ _type_ `GENERATED ALWAYS AS IDENTITY( START WITH` _start_ `INCREMENT BY` _incr_ `) PRIMARY KEY`|
+        | Oracle    | _colName_ _type_ `GENERATED ALWAYS AS IDENTITY( START WITH` _start_ `INCREMENT BY` _incr_ `) PRIMARY KEY`|
         | MS-SQL    | _colName_ _type_ `IDENTITY(` _start_ ,_increment_ `) PRIMARY KEY`|
         | SQLite    | _colName_ _type_ `PRIMARY KEY AUTOINCREMENT`|
         | MySQL     | _colName_ _type_ `AUTO_INCREMENT PRIMARY KEY` |
-        | PostgreSQL| _colName_ _type_ `GENERATED ALWAYS AS IDENTITY( INCREMENT BY ` _incr_ `START WITH` _start_ `)`|
+        | PostgreSQL| _colName_ _type_ `GENERATED ALWAYS AS IDENTITY( INCREMENT BY` _incr_ `START WITH` _start_ `)`|
         * Identity value defaults to start at **1**.  However, I recommend that it start at higher number depending on the data type. **10** or **100** are good candidates.  Starting at a higher number is akin to the stack memory where it is reserved for system seeded values.
         * SQLite starting need to be updated in the system table `sqlite_sequence` as follows:
             * `UPDATE sqlite_sequence SET seq = 100 WHERE NAME = ` 'tableName'`;`
@@ -437,7 +437,7 @@ Always pick the data type that is adequate to store your values.  It is not just
         | Oracle    | `COMMENT ON TABLE` _tabName_ `IS` 'string'|
         | MS-SQL    | `EXEC sp_addextendedproperty @name = N'MS_Description' ,@value = N`'string' `,@level1type = N'Table' ,@level1name = `_tabName_|
         | SQLite    |                 |
-        | MySQL     | `CREATE TABLE` tabName `(...) COMMENT = ` 'string'|
+        | MySQL     | `CREATE TABLE` tabName `(...) COMMENT =` 'string'|
         | PostgreSQL| `COMMENT ON TABLE` _tabName_ `IS` 'string'|
 
 ## Index Options

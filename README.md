@@ -184,8 +184,9 @@ Always pick the data type that is adequate to store your values.  It is not just
         |`SMALLSERIAL`|2 bytes|                          1|                     32,767|                           |
         |`SERIAL`     |4 bytes|                          1|              2,147,483,647|                           |
         |`BIGSERIAL`  |8 bytes|                          1|  9,223,372,036,854,775,807|                           |
-        * e.g. DBMS that do not support `TINYINT` but  has `SMALLINT`,  the `SMALLINT` data type shall be used in liue of `SMALLINT`.
+        * e.g. DBMS that do not support `TINYINT` but has `SMALLINT`,  the `SMALLINT` data type shall be used in lieu of `TINYINT`.
         * `SERIAL` data type are auto incremented `INTEGER`.
+            * MySQL alias `SERIAL` as `BIGINT UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE`.
 * Don't oversize your data type to store a small number.  Right size your data type with a little room to grow but **no** more.
     * Do your analysis or profile your data before deciding on a "right" data type for your column.
     * Do constraint the column with `CHECK` to the expected bound of your data.

@@ -138,6 +138,18 @@ The above are extracted out from the following:
         | PostgreSQL| 63       |
     * If you are designing a data model to be portable between different DBMS, you should consider a identifier name **no** longer than 30 characters.
 
+## Maximum row size
+* Depending on the pagesize, the default maximum row size is as follows:
+    *   |DBMS       |Max Size  |
+        |-----------|---------:|
+        | DB2       | 2 Gb     |
+        | Oracle    | 4 Gb     |
+        | MS-SQL    | 8,060 b*&nbsp;|
+        | SQLite    | 1 Gb     |
+        | MySQL     | 65,535 b*&nbsp;|
+        | PostgreSQL| 1.6 Tb   |
+    * Be cautious when using fixed length character or binary data type.
+
 ## Data Types
 Always pick the data type that is adequate to store your values.  It is not just a syntax requirement, it is part of your documentation.
 * For example, a `SMALLINT` data type is more than sufficient to be the primary key for a table that stores all the countries on the planet.  It conveys a maximum ceiling for ID values of **32,767** and not **2,147,483,647**.  In this example, it should be further constrain to a maximum of **200** with the following:

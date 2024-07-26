@@ -136,7 +136,8 @@ CREATE  TABLE   IF  NOT EXISTS  Test_Column_Syntax(
         ,C1     CHAR(1)         NOT NULL    UNIQUE  CHECK( C1 <>'?')
         ,C3     VARCHAR(256)                SECURED WITH sec_label
         ,H0     TIMESTAMP                   DEFAULT CURRENT_TIMESTAMP   IMPLICITLY    HIDDEN
-);
+)
+;
 
 
 DROP    TABLE   IF      EXISTS  Test_Generate_Syntax
@@ -144,7 +145,8 @@ DROP    TABLE   IF      EXISTS  Test_Generate_Syntax
 CREATE  TABLE   IF  NOT EXISTS  Test_Generate_Syntax(
          ID     INTEGER         NOT NULL    GENERATED ALWAYS AS IDENTITY( START WITH 100 INCREMENT BY 3) PRIMARY KEY
         ,C1     INTEGER         NOT NULL    GENERATED ALWAYS AS( ID +1 )
-);
+)
+;
 
 DROP    TABLE   IF      EXISTS  Test_Tablespace_Syntax
 ;

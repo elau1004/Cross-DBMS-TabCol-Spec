@@ -124,6 +124,7 @@ The above are extracted out from the following:
 * MySQL:        https://dev.MySQL.com/doc/refman/8.4/en/data-types.html <sup>v 8.4</sup>
 * PostgreSQL:   https://www.postgresql.org/docs/current/sql-createtable.html <sup>v 16</sup>
 * JPA (ORM):    https://jakarta.ee/specifications/persistence/3.2/jakarta-persistence-spec-3.2 <sup>v 3.2</sup>
+* SQLAlchemy:   https://docs.sqlalchemy.org/en/20/dialects/index.html
 * Reference:    https://www.databasestar.com/sql-data-types/
 
 ## Table/Column name length
@@ -250,25 +251,15 @@ Always pick the data type that is adequate to store your values.  It is not just
         | PostgreSQL|`CREATE DATABASE` myDBMS `ENCODING` 'UTF8' `LC_COLLATE =` 'en_US.utf8', `LC_CTYPE =` 'en_US.utf8';|
 
 * All DBMS listed above support fixed and variable character type with the following variance:
-    *   |DBMS       |Type               |    Max _s_|Default|
-        |-----------|-------------------|----------:|------:|
-        | DB2       |`CHAR(` _s_ `)`    |        254|       |
-        | Oracle    |`CHAR(` _s_ `)`    |      2,000|       |
-        | MS-SQL    |`CHAR(` _s_ `)`    |      8,000|       |
-        | SQLite    |`CHAR(` _s_ `)`    |      2,000|       |
-        | MySQL     |`CHAR(` _s_ `)`    |        255|       |
-        | PostgreSQL|`CHAR(` _s_ `)`    | 10,485,760|       |
+    *   |DBMS       |Fixed Type         |Fix Max _s_|Default|Variable Type      |Var Max _s_|Default|
+        |-----------|-------------------|----------:|------:|-------------------|----------:|------:|
+        | DB2       |`CHAR(` _s_ `)`    |        255|       |`VARCHAR(`  _s_ `)`|     32,672|       |
+        | Oracle    |`CHAR(` _s_ `)`    |      2,000|       |`VARCHAR2(` _s_ `)`|      4,000|       |
+        | MS-SQL    |`CHAR(` _s_ `)`    |      8,000|       |`VARCHAR(`  _s_ `)`|      8,000|       |
+        | SQLite    |`CHAR(` _s_ `)`    |      2,000|       |`VARCHAR(`  _s_ `)`|           |       |
+        | MySQL     |`CHAR(` _s_ `)`    |        255|       |`VARCHAR(`  _s_ `)`|     65,535|       |
+        | PostgreSQL|`CHAR(` _s_ `)`    | 10,485,760|       |`VARCHAR(`  _s_ `)`| 10,485,760|       |
         * where the elements between the brackets are optional.
-        * _s_ denotes the length.
-
-    *   |DBMS       |Type               |    Max _s_|Default|
-        |-----------|-------------------|----------:|------:|
-        | DB2       |`VARCHAR(`  _s_ `)`|     32,672|       |
-        | Oracle    |`VARCHAR2(` _s_ `)`|      4,000|       |
-        | MS-SQL    |`VARCHAR(`  _s_ `)`|      8,000|       |
-        | SQLite    |`VARCHAR(`  _s_ `)`|           |       |
-        | MySQL     |`VARCHAR(`  _s_ `)`|     65,535|       |
-        | PostgreSQL|`VARCHAR(`  _s_ `)`| 10,485,760|       |
         * _s_ denotes the length.
     * The number of character will be depended on the character set setup for the database.
     * It is good practice to specify the length because different DBMS have different default length.
@@ -286,14 +277,14 @@ Always pick the data type that is adequate to store your values.  It is not just
 
 #### Binary Types:
 * All DBMS listed above support this binary data type with the following variance:
-    *   |DBMS       |Fixed Type       |  Fix Max _s_|  Default|Variable Type       |Var Max _s_|       Default|
-        |-----------|-----------------|------------:|--------:|--------------------|----------:|-------------:|
-        | DB2       |`BINARY(` _s_ `)`|         ?255|         |`VARBINARY(` _s_ `)`|     32,672|              |
-        | Oracle    |`RAW(` _s_ `)`   |        2,000|         |`LONG RAW`          |           | 2,147,483,648|
-        | MS-SQL    |`BINARY` _s_ `)` |        8,000|         |`VARBINARY( MAX )`  |           | 2,147,483,648|
-        | SQLite    |                 |             |         |`BLOB`              |           | 1,000,000,000|
-        | MySQL     |`BINARY(` _s_ `)`|          255|         |`VARBINARY(` _s_ `)`|     65,535|              |
-        | PostgreSQL|                 |             |         |`BYTEA`             |           | 1,063,256,064|
+    *   |DBMS       |Fixed Type       |  Fix Max _s_|Default|Variable Type       |Var Max _s_|       Default|
+        |-----------|-----------------|------------:|------:|--------------------|----------:|-------------:|
+        | DB2       |`BINARY(` _s_ `)`|          255|       |`VARBINARY(` _s_ `)`|     32,672|              |
+        | Oracle    |`RAW(` _s_ `)`   |        2,000|       |`LONG RAW`          |           | 2,147,483,648|
+        | MS-SQL    |`BINARY` _s_ `)` |        8,000|       |`VARBINARY( MAX )`  |           | 2,147,483,648|
+        | SQLite    |                 |             |       |`BLOB`              |           | 1,000,000,000|
+        | MySQL     |`BINARY(` _s_ `)`|          255|       |`VARBINARY(` _s_ `)`|     65,535|              |
+        | PostgreSQL|                 |             |       |`BYTEA`             |           | 1,063,256,064|
         * _s_ denotes the length.
 
 * The following are data type for large binary data with the following variance:
@@ -307,8 +298,29 @@ Always pick the data type that is adequate to store your values.  It is not just
         | PostgreSQL|`BYTEA`         |             |1,063,256,064|
 
 #### National Character
-* The term national character set refers to an alternative character set that enables you to store Unicode character data in a database that does not have a Unicode database character set.
-    *   Work in progress.
+* The term national character set refers to an alternative character set that enables you to store Unicode character data in a database that does not have a Unicode database character set.  It is better that you setup your database to default to UTF-8 character set.
+    *   |DBMS       |Fixed Type        |Default _s_|Max _s_    |Variable Type       |Var Max _s_|Default|
+        |-----------|------------------|----------:|----------:|--------------------|----------:|------:|
+        | DB2       |`NCHAR[(` _s_ `)]`| 1         | 255       |`NVARCHAR(` _s_ `)` |     32,672|       |
+        | Oracle    |`NCHAR[(` _s_ `)]`| 1         | 2,000     |`NVARCHAR2(` _s_ `)`|      4,000|       |
+        | MS-SQL    |`NCHAR[(` _s_ `)]`|           | 4,000     |`NVARCHAR(` _s_ `)` |      4,000|       |
+        | SQLite    |`TEXT`            |           |           |`TEXT`              |           |       |
+        | MySQL     |`NCHAR(` _s_ `)`  | 1         | 255       |`NVARCHAR(`  _s_ `)`|     65,535|       |
+        | PostgreSQL|`CHAR(` _s_ `)`   | 1         | 10,485,760|`VARCHAR(`  _s_ `)` | 10,485,760|       |
+        * _s_ denotes the length.
+        * National Character set uses 2 bytes to store a character and may not be storage wise efficient.
+    * It is good practice to specify the length because different DBMS have different default length.
+
+* The following are data type for large character data with the following variance:
+    *   |DBMS       |Type             |      Max _s_|       Default|
+        |-----------|-----------------|------------:|-------------:|
+        | DB2       |`NCLOB(` _s_ `)` |2,147,483,646|     1,048,576|
+        | Oracle    |`NCLOB`          |             | 4,294,967,295|
+        | MS-SQL    |`NTEXT` \ `NVARCHAR( MAX )`|   | 2,147,483,647|
+        | SQLite    |`TEXT`           |             |              |
+        | MySQL     |`LONGTEXT`       |             | 4,294,967,295|
+        | PostgreSQL|`TEXT`           |             | 1,063,256,064|
+        * _s_ denotes the length.
 
 
 ### Temporal Types:

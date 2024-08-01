@@ -4,6 +4,8 @@
 --$ podman pull   container-registry.oracle.com/database/free:latest
 --$ podman run  --hostname=orahost --name oracle --privileged=true -dit -p 1521:1521 -e ORACLE_PWD=Pa@55word  container-registry.oracle.com/database/free
 --$ podman logs -f oracle
+--$ podman stop    oracle
+--$ podman start   oracle
 --      Username: system
 --      Password: Pa@55word
 --      SID:      FREEPDB1
@@ -48,84 +50,86 @@ CREATE  TABLE   IF  NOT EXISTS  Test_Data_Types(
         ,c035_binary_float      BINARY_FLOAT                    --  
         ,c036_binary_double     BINARY_DOUBLE                   --
         ,c037_char              CHAR                            --  
-        ,c038_char_s            CHAR(1)                         --  
+        ,c038_char_s            CHAR(2000)                      --  
         ,c039_character         CHARACTER                       --  
-        ,c040_character_s       CHARACTER(1)                    --  
+        ,c040_character_s       CHARACTER(2000)                 --  
 --      ,c041_char_v            CHAR    VARYING                 --  
 --      ,c042_char_s_v          CHAR(1) VARYING                 --  
 --      ,c043_dbpchar           DBPCHAR                         --      
 --      ,c044_dbpchar_s         DBPCHAR( 1 )                    --      
 --      ,c045_varchar           VARCHAR                         --  
 --      ,c046_varchar_s         VARCHAR(1)                      --  
---      ,c047_varchar2          VARCHAR2                        --  
-        ,c048_varchar2_s        VARCHAR2(2)                     --
---      ,c049_text              TEXT                            --  
---      ,c050_longtext          LONGTEXT                        --  
-        ,c051_nchar             NCHAR                           --  
-        ,c052_nchar_s           NCHAR(1)                        --  
---      ,c053_nvarchar          NVARCHAR                        --  
---      ,c054_nvarchar_s        NVARCHAR(1)                     --  
---      ,c055_nvarchar2         NVARCHAR2                       --  
-        ,c056_nvarchar2_s       NVARCHAR2(1)                    --  
---      ,c057_ntext             NTEXT                           --
-        ,c058_long              LONG                            --  ORA-01754: a table may contain only one column of type LONG
-        ,c059_clob              CLOB                            --  
---      ,c060_clob_s            CLOB(1)                         --  
---      ,c061_longclob          LONGCLOB                        --  
---      ,c062_long_clob         LONG CLOB                       --  
-        ,c063_nclob             NCLOB                           --
---      ,c064_bit               BIT                             --  
---      ,c065_bit_s             BIT(1)                          --  
---      ,c066_bit_v             BIT         VARYING             --  
---      ,c067_bit_s_v           BIT(1)      VARYING             --  
---      ,c068_binary            BINARY                          --  
---      ,c069_binary_s          BINARY(1)                       --  
---      ,c070_binary_v          BINARY      VARYING             --  
---      ,c071_binary_s_v        BINARY(1)   VARYING             --  
---      ,c072_varbinary         VARBINARY                       --  
---      ,c073_varbinary_s       VARBINARY(1)                    --  
---      ,c074_bytea             BYTEA                           --  
---      ,c075_bytea_s           BYTEA(1)                        --  
-        ,c076_blob              BLOB                            --
---      ,c077_blob_s            BLOB(1)                         --  
---      ,c078_longblob          LONGBLOB                        --
---      ,c079_long_blob         LONG BLOB                       --  
---      ,c080_dbblob            DBBLOB                          --  
---      ,c081_dbblob_s          DBBLOB(1)                       --  
---      ,c082_raw               RAW                             --  
-        ,c083_raw_s             RAW(1)                          --  
---      ,c084_longraw           LONGRAW                         --  
---      ,c085_long_raw          LONG RAW                        --  ORA-01754: a table may contain only one column of type LONG
---      ,c086_image             IMAGE                           --
-        ,c087_date              DATE                            --  
---      ,c088_time              TIME                            --  
---      ,c089_time_p            TIME(1)                         --  
---      ,c090_time_w_tz         TIME WITH TIME ZONE             --  
---      ,c091_datetime          DATETIME                        --  
---      ,c092_datetime2         DATETIME2                       --  
-        ,c093_timestamp         TIMESTAMP                       --  
-        ,c094_timestamp_p       TIMESTAMP(1)                    --  
-        ,c095_timestamp_w_tz    TIMESTAMP       WITH TIME ZONE  --  
-        ,c096_timestamp_p_w_tz  TIMESTAMP(1)    WITH TIME ZONE  --  
---      ,c097_datetimeoffset    DATETIMEOFFSET                  --  
---      ,c098_smalldatetime     SMALLDATETIME                   --  
---      ,c099_year              YEAR                            --
---      ,c100_array             ARRAY                           --  
---      ,c101_enum              ENUM                            --  
---      ,c102_enum_v1v2v3       ENUM('Low', 'Medium', 'High')   --
---      ,c103_set               SET                             --  
---      ,c104_set_v1v2v3        SET( 'Low', 'Medium', 'High')   --
---      ,c105_ref               REF                             --  
-        ,c106_rowid             ROWID                           --  
-        ,c107_urowid            UROWID                          --  
---      ,c108_uuid              UUID                            --  
---      ,c109_uniqueidentifier  UNIQUEIDENTIFIER                --
-        ,c110_json              JSON                            --  
---      ,c110_vjson             VARCHAR2(4000) CHECK( c110_vjson IS JSON )  --  Version < 21c  
---      ,c111_xml               XML                             --  
---      ,c112_cidr              CIDR                            --  
---      ,c113_inet              INET                            --  
---      ,c114_macaddr           MACADDR                         --  
+--      ,c047_varchar_max       VARCHAR(MAX)                    --  
+--      ,c048_varchar2          VARCHAR2                        --  
+        ,c049_varchar2_s        VARCHAR2(4000)                  --
+        ,c050_nchar             NCHAR                           --  
+        ,c051_nchar_s           NCHAR(1000)                     --  
+--      ,c052_nvarchar          NVARCHAR                        --  
+--      ,c053_nvarchar_s        NVARCHAR(1)                     --  
+--      ,c054_nvarchar2         NVARCHAR2                       --  
+        ,c055_nvarchar2_s       NVARCHAR2(2000)                 --  
+--      ,c056_ntext             NTEXT                           --
+        ,c057_long              LONG                            --  ORA-01754: a table may contain only one column of type LONG
+--      ,c058_text              TEXT                            --  
+--      ,c059_longtext          LONGTEXT                        --  
+        ,c060_clob              CLOB                            --  
+--      ,c061_clob_s            CLOB(1)                         --  
+--      ,c062_longclob          LONGCLOB                        --  
+--      ,c063_long_clob         LONG CLOB                       --  
+        ,c064_nclob             NCLOB                           --
+--      ,c064_nclob_s           NCLOB(4000)                     --  
+--      ,c065_bit               BIT                             --  
+--      ,c066_bit_s             BIT(1)                          --  
+--      ,c067_bit_v             BIT         VARYING             --  
+--      ,c068_bit_s_v           BIT(1)      VARYING             --  
+--      ,c069_binary            BINARY                          --  
+--      ,c070_binary_s          BINARY(1)                       --  
+--      ,c071_binary_v          BINARY      VARYING             --  
+--      ,c072_binary_s_v        BINARY(1)   VARYING             --  
+--      ,c073_varbinary         VARBINARY                       --  
+--      ,c074_varbinary_s       VARBINARY(1)                    --  
+--      ,c075_bytea             BYTEA                           --  
+--      ,c076_bytea_s           BYTEA(1)                        --  
+        ,c077_blob              BLOB                            --
+--      ,c078_blob_s            BLOB(1)                         --  
+--      ,c079_longblob          LONGBLOB                        --
+--      ,c080_long_blob         LONG BLOB                       --  
+--      ,c081_dbblob            DBBLOB                          --  
+--      ,c082_dbblob_s          DBBLOB(1)                       --  
+--      ,c083_raw               RAW                             --  
+        ,c084_raw_s             RAW(1)                          --  
+--      ,c085_longraw           LONGRAW                         --  
+--      ,c086_long_raw          LONG RAW                        --  ORA-01754: a table may contain only one column of type LONG
+--      ,c087_image             IMAGE                           --
+        ,c088_date              DATE                            --  
+--      ,c089_time              TIME                            --  
+--      ,c090_time_p            TIME(1)                         --  
+--      ,c091_time_w_tz         TIME WITH TIME ZONE             --  
+--      ,c092_datetime          DATETIME                        --  
+--      ,c093_datetime2         DATETIME2                       --  
+        ,c094_timestamp         TIMESTAMP                       --  
+        ,c095_timestamp_p       TIMESTAMP(1)                    --  
+        ,c096_timestamp_w_tz    TIMESTAMP       WITH TIME ZONE  --  
+        ,c097_timestamp_p_w_tz  TIMESTAMP(1)    WITH TIME ZONE  --  
+--      ,c098_datetimeoffset    DATETIMEOFFSET                  --  
+--      ,c099_smalldatetime     SMALLDATETIME                   --  
+--      ,c100_year              YEAR                            --
+--      ,c101_array             ARRAY                           --  
+--      ,c102_enum              ENUM                            --  
+--      ,c103_enum_v1v2v3       ENUM('Low', 'Medium', 'High')   --
+--      ,c104_set               SET                             --  
+--      ,c105_set_v1v2v3        SET( 'Low', 'Medium', 'High')   --
+--      ,c106_ref               REF                             --  
+        ,c107_rowid             ROWID                           --  
+        ,c108_urowid            UROWID                          --  
+--      ,c109_uuid              UUID                            --  
+--      ,c110_uniqueidentifier  UNIQUEIDENTIFIER                --
+        ,c111_json              JSON                            --  
+--      ,c111_vjson             VARCHAR2(4000) CHECK( c110_vjson IS JSON )  --  Version < 21c  
+--      ,c112_xml               XML                             --  
+--      ,c113_cidr              CIDR                            --  
+--      ,c114_inet              INET                            --  
+--      ,c115_macaddr           MACADDR                         --  
 );
 
 
@@ -137,17 +141,33 @@ CREATE  TABLE   IF  NOT EXISTS  Test_Column_Syntax(
         ,C1     CHAR(1)                                 NOT NULL    UNIQUE  CHECK( C1 <> '?' )
         ,C2     DECIMAL(10, 2)  ENCRYPT     USING  'AES256' IDENTIFY BY 'my_enc_key'
         ,H0     TIMESTAMP       INVISIBLE   DEFAULT CURRENT_TIMESTAMP   
-)
-;
+);
 
 
 DROP    TABLE   Test_Generate_Syntax
 ;
 CREATE  TABLE   Test_generate_Syntax(
-         ID     INTEGER         GENERATED ALWAYS AS IDENTITY( START WITH 100 INCREMENT BY 3) NOT NULL PRIMARY KEY 
-        ,C1     INTEGER         GENERATED ALWAYS AS( ID +1 )  VIRTUAL                        NOT NULL 
-)
+         ID     INTEGER         GENERATED BY DEFAULT  AS IDENTITY( START WITH 100 INCREMENT BY 3) NOT NULL  PRIMARY KEY
+        ,C1     INTEGER         GENERATED    ALWAYS   AS( ID +1 )  VIRTUAL
+        ,T1     TIMESTAMP
+);
+INSERT  INTO    Test_Generate_Syntax(     T1 )  VALUES(    CURRENT_TIMESTAMP );
+INSERT  INTO    Test_Generate_Syntax(     T1 )  VALUES(    CURRENT_TIMESTAMP );
+INSERT  INTO    Test_Generate_Syntax( ID ,T1 )  VALUES( 1 ,CURRENT_TIMESTAMP );
+SELECT *FROM    Test_Generate_Syntax;
+
+
+DROP    TABLE   IF      EXISTS  Test_String_Size
 ;
+CREATE  TABLE   IF  NOT EXISTS  Test_String_Size(
+         ID         INTEGER
+        ,Char_0     CHAR
+        ,Char_n     CHAR(    2000 )
+        ,VChr_0     VARCHAR2
+        ,VChr_n     VARCHAR2(4000 )
+        ,Clob_0     CLOB
+        ,Clob_n     CLOB(2147483646)
+);
 
 
 DROP    TABLE   IF      EXISTS  Test_Tablespace_Syntax

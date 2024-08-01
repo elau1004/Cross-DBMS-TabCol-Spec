@@ -129,8 +129,7 @@ CREATE  TABLE   IF  NOT EXISTS  Test_Data_Types(
 --      ,c113_cidr              CIDR                            --  
 --      ,c114_inet              INET                            --  
 --      ,c115_macaddr           MACADDR                         --  
-)
-;
+);
 
 
 DROP    TABLE   IF      EXISTS  Test_Column_Syntax

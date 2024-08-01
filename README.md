@@ -1,116 +1,116 @@
 # Cross DBMS Table features and nuiances
 The following list out the most common TABLE features supported by the most popular DBMS as off 2024-07-15.  This is still work in progress.  You should trust but verify the information in this cheat sheet.
 
-|Features                                                                   |ANSI_99|DB2_LUW|Oracle |MS_SQL |SQLite |MySQL  |PostgreSQL|
-|---------------------------------------------------------------------------|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:------:|
-|**Create Table**:                                                          |       |       |       |       |       |       |        |
-|&nbsp; &nbsp;`IF NOT EXISTS`                                               | Y     | Y     | Y     |       | Y     | Y     | Y      |
-|**Data Types**:                                                            |       |       |       |       |       |       |        |
-|&nbsp; &nbsp; Boolean Types:                                               |       |       |       |       |       |       |        |
-|&nbsp; &nbsp; &nbsp; &nbsp;`BOOLEAN`                                       | Y     | Y     |       |       |       | Y     | Y      |
-|&nbsp; &nbsp; &nbsp; &nbsp;`BIT`                                           |       |       |       | Y     |       |       |        |
-|&nbsp; &nbsp; Integer Types:                                               |       |       |       |       |       |       |        |
-|&nbsp; &nbsp; &nbsp; &nbsp;`TINYINT`                                       |       |       |       | Y     |       | Y     |        |
-|&nbsp; &nbsp; &nbsp; &nbsp;`SMALLINT`                                      | Y     | Y     |       | Y     |       | Y     | Y      |
-|&nbsp; &nbsp; &nbsp; &nbsp;`MEDIUMINT`                                     |       |       |       |       |       | Y     |        |
-|&nbsp; &nbsp; &nbsp; &nbsp;`INTEGER` \ `INT`                               | Y     | Y     |       | Y     | Y     | Y     | Y      |
-|&nbsp; &nbsp; &nbsp; &nbsp;`BIGINT`                                        |       | Y     |       | Y     |       | Y     | Y      |
-|&nbsp; &nbsp; &nbsp; &nbsp;`MONEY`                                         |       |       |       | Y     |       |       | Y      |
-|&nbsp; &nbsp; &nbsp; &nbsp;`SMALLMONEY`                                    |       |       |       | Y     |       |       |        |
-|&nbsp; &nbsp; &nbsp; &nbsp;`SERIAL` \ `SMALLSERIAL` \ `BIGSERIAL`          |       |       |       |       |       |       | Y      |
-|&nbsp; &nbsp; Fixed Point Types:                                           |       |       |       |       |       |       |        |
-|&nbsp; &nbsp; &nbsp; &nbsp;`DECIMAL`                                       | Y     | Y     |       | Y     |       | Y     | Y      |
-|&nbsp; &nbsp; &nbsp; &nbsp;`NUMBER`                                        |       |       | Y     |       |       |       |        |
-|&nbsp; &nbsp; &nbsp; &nbsp;`NUMERIC` \ `NUM`                               | Y     | Y     |       | Y     | Y     | Y     | Y      |
-|&nbsp; &nbsp; Floating Point Types:                                        |       |       |       |       |       |       |        |
-|&nbsp; &nbsp; &nbsp; &nbsp;`FLOAT`                                         | Y     | Y     |       | Y     | Y     | Y     | Y      |
-|&nbsp; &nbsp; &nbsp; &nbsp;`REAL`                                          | Y     | Y     |       | Y     |       |       | Y      |
-|&nbsp; &nbsp; &nbsp; &nbsp;`DOUBLE`                                        |       |       |       |       |       | Y     |        |
-|&nbsp; &nbsp; &nbsp; &nbsp;`DOUBLE PRECISION`                              | Y     | Y     |       |       |       | Y     | Y      |
-|&nbsp; &nbsp; &nbsp; &nbsp;`BINARY_FLOAT` \ `BINARY_DOUBLE`                |       |       | Y     |       |       |       |        |
-|&nbsp; &nbsp; Character Types:                                             |       |       |       |       |       |       |        |
-|&nbsp; &nbsp; &nbsp; &nbsp;`CHARACTER` \ `CHAR`                            | Y     | Y     | Y     | Y     |       | Y     | Y      |
-|&nbsp; &nbsp; &nbsp; &nbsp;`CHAR VARYING`                                  | Y     | Y     |       |       |       |       | Y      |
-|&nbsp; &nbsp; &nbsp; &nbsp;`VARCHAR`                                       |       | Y     |       |       |       | Y     | Y      |
-|&nbsp; &nbsp; &nbsp; &nbsp;`VARCHAR2`                                      |       |       | Y     |       |       |       |        |
-|&nbsp; &nbsp; &nbsp; &nbsp;`TEXT`                                          |       |       |       | Y     | Y     | Y     | Y      |
-|&nbsp; &nbsp; &nbsp; &nbsp;`LONG`                                          |       |       | Y     |       |       |       |        |
-|&nbsp; &nbsp; &nbsp; &nbsp;`CLOB`                                          | Y     | Y     | Y     |       |       |       |        |
-|&nbsp; &nbsp; &nbsp; &nbsp; National Character Types:                      |       |       |       |       |       |       |        |
-|&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;`NCHAR`                           | Y     | Y     | Y     |       |       |       |        |
-|&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;`NVARCHAR`                        |       | Y     |       |       |       |       |        |
-|&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;`NVARCHAR2`                       |       |       | Y     |       |       |       |        |
-|&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;`NTEXT`                           |       |       |       | Y     |       |       |        |
-|&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;`NCLOB`                           | Y     | Y     | Y     |       |       |       |        |
-|&nbsp; &nbsp; &nbsp; &nbsp; Character Set:                                 |       |       |       |       |       |       |        |
-|&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;`CHARACTER SET`                   | Y     |       |       |       |       | Y     |        |
-|&nbsp; &nbsp; &nbsp; &nbsp; Collation:                                     |       |       |       |       |       |       |        |
-|&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;`COLLATE`                         | Y     | Y     | Y     | Y     | Y     | Y     | Y      |
-|&nbsp; &nbsp; Binary Types:                                                |       |       |       |       |       |       |        |
-|&nbsp; &nbsp; &nbsp; &nbsp;`BIT`                                           | Y     |       |       |       |       |       | Y      |
-|&nbsp; &nbsp; &nbsp; &nbsp;`BIT VARYING`                                   | Y     |       |       |       |       |       | Y      |
-|&nbsp; &nbsp; &nbsp; &nbsp;`BINARY`                                        |       | Y     |       | Y     |       | Y     |        |
-|&nbsp; &nbsp; &nbsp; &nbsp;`BINARY VARYING`                                |       | Y     |       |       |       |       |        |
-|&nbsp; &nbsp; &nbsp; &nbsp;`VARBINARY`                                     |       | Y     |       | Y     |       | Y     |        |
-|&nbsp; &nbsp; &nbsp; &nbsp;`BYTEA`                                         |       |       |       |       |       |       | Y      |
-|&nbsp; &nbsp; &nbsp; &nbsp;`BLOB`                                          | Y     | Y     | Y     |       | Y     | Y     |        |
-|&nbsp; &nbsp; &nbsp; &nbsp;`DBBLOB`                                        |       | Y     |       |       |       |       |        |
-|&nbsp; &nbsp; &nbsp; &nbsp;`RAW`                                           |       |       | Y     |       |       |       |        |
-|&nbsp; &nbsp; &nbsp; &nbsp;`LONG RAW`                                      |       |       | Y     |       |       |       |        |
-|&nbsp; &nbsp; &nbsp; &nbsp;`IMAGE`                                         |       |       |       | Y     |       |       |        |
-|&nbsp; &nbsp; Temporal Types:                                              |       |       |       |       |       |       |        |
-|&nbsp; &nbsp; &nbsp; &nbsp;`DATE`                                          | Y     | Y     | Y     | Y     |       | Y     | Y      |
-|&nbsp; &nbsp; &nbsp; &nbsp;`TIME`                                          | Y     | Y     |       | Y     |       | Y     | Y      |
-|&nbsp; &nbsp; &nbsp; &nbsp;`TIME WITH TIME ZONE`                           | Y     |       |       |       |       |       | Y      |
-|&nbsp; &nbsp; &nbsp; &nbsp;`DATETIME`                                      |       |       | Y     |       |       | Y     |        |
-|&nbsp; &nbsp; &nbsp; &nbsp;`DATETIME2`                                     |       |       |       | Y     |       |       |        |
-|&nbsp; &nbsp; &nbsp; &nbsp;`TIMESTAMP`                                     | Y     | Y     | Y     |       |       | Y     | Y      |
-|&nbsp; &nbsp; &nbsp; &nbsp;`TIMESTAMP WITH TIME ZONE`                      | Y     |       | Y     |       |       |       | Y      |
-|&nbsp; &nbsp; &nbsp; &nbsp;`DATETIMEOFFSET`                                |       |       |       | Y     |       |       |        |
-|&nbsp; &nbsp; &nbsp; &nbsp;`SMALLDATETIME`                                 |       |       |       | Y     |       |       |        |
-|&nbsp; &nbsp; &nbsp; &nbsp;`YEAR`                                          |       |       |       |       |       | Y     |        |
-|&nbsp; &nbsp; Collection Types:                                            |       |       |       |       |       |       |        |
-|&nbsp; &nbsp; &nbsp; &nbsp;`ARRAY`                                         | Y     |       |       |       |       |       | Y      |
-|&nbsp; &nbsp; &nbsp; &nbsp;`ENUM`                                          |       |       |       |       |       | Y     | Y      |
-|&nbsp; &nbsp; &nbsp; &nbsp;`SET`                                           |       |       |       |       |       | Y     |        |
-|&nbsp; &nbsp; Reference Types:                                             |       |       |       |       |       |       |        |
-|&nbsp; &nbsp; &nbsp; &nbsp;`REF`                                           | Y     |       |       |       |       |       |        |
-|&nbsp; &nbsp; &nbsp; &nbsp;`ROWID`                                         |       |       | Y     |       |       |       |        |
-|&nbsp; &nbsp; &nbsp; &nbsp;`UROWID`                                        |       |       | Y     |       |       |       |        |
-|&nbsp; &nbsp; Object Types:                                                |       |       |       |       |       |       |        |
-|&nbsp; &nbsp; &nbsp; &nbsp;`JSON`                                          |       |       | Y     | Y     |       |       | Y      |
-|&nbsp; &nbsp; &nbsp; &nbsp;`XML`                                           |       | Y     |       |       |       |       | Y      |
-|&nbsp; &nbsp; Other Types:                                                 |       |       |       |       |       |       |        |
-|&nbsp; &nbsp; &nbsp; &nbsp;`CIDR` \ `INET` \ `MACADDR`                     |       |       |       |       |       |       | Y      |
-|&nbsp; &nbsp; &nbsp; &nbsp;`UUID`                                          |       |       |       |       |       |       | Y      |
-|&nbsp; &nbsp; &nbsp; &nbsp;`UNIQUEIDENTIFIER`                              |       |       |       | Y     |       |       | Y      |
-|                                                                           |       |       |       |       |       |       |        |
-|**Column Options**                                                         |       |       |       |       |       |       |        |
-|&nbsp; &nbsp;`NOT NULL`                                                    |       | Y     | Y     | Y     | Y     | Y     | Y      |
-|&nbsp; &nbsp;`INVISIBLE` \ `HIDDEN`                                        |       | Y     | Y     |       | Y     | Y     |        |
-|&nbsp; &nbsp;`PRIMARY KEY`                                                 |       | Y     |       | Y     | Y     | Y     | Y      |
-|&nbsp; &nbsp;`UNIQUE`                                                      |       | Y     |       | Y     | Y     | Y     | Y      |
-|&nbsp; &nbsp;`CHECK`                                                       |       | Y     | Y     | Y     | Y     | Y     | Y      |
-|&nbsp; &nbsp;`DEFAULT`                                                     |       | Y     | Y     | Y     | Y     | Y     | Y      |
-|&nbsp; &nbsp;`SECURED WITH` \ `ENCRYPT` \ `ENCRYPTED WITH`                 |       | Y     | Y     | Y     |       |       |        |
-|&nbsp; &nbsp;`COMMENT`                                                     |       |       |       |       | Y     | Y     | Y      |
-|&nbsp; &nbsp;**Generated Column**                                          |       |       |       |       |       |       |        |
-|&nbsp; &nbsp; &nbsp; &nbsp;`VIRTUAL` \ `GENERATED ALWAYS AS`               |       | Y     | Y     | Y     | Y     | Y     | Y      |
-|&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;`STORED` \ `VIRTUAL`              |       |       | Y     |       | Y     | Y     | Y      |
-|&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;`PERSISTED`                       |       |       |       | Y     |       |       |        |
-|&nbsp; &nbsp;**Identity Options**                                          |       |       |       |       |       |       |        |
-|&nbsp; &nbsp; &nbsp; &nbsp;`AUTO_INCREMENT`                                |       |       |       |       | Y     | Y     |        |
-|&nbsp; &nbsp; &nbsp; &nbsp;`GENERATED ALWAYS`                              |       | Y     | Y     |       |       |       | Y      |
-|&nbsp; &nbsp; &nbsp; &nbsp;`GENERATED BY DEFAULT`                          |       | Y     | Y     |       |       |       |        |
-|&nbsp; &nbsp; &nbsp; &nbsp;`IDENTITY`                                      |       | Y     |       | Y     |       |       |        |
-|&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;`START WITH`                      |       | Y     | Y     | Y     |       |       |        |
-|&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;`INCREMENT BY`                    |       | Y     | Y     | Y     |       |       |        |
-|**Table Options**                                                          |       |       |       |       |       |       |        |
-|&nbsp; &nbsp;`COMMENT`                                                     |       |       |       |       |       | Y     |        |
-|&nbsp; &nbsp;`COMPRESS` \ `COMPRESSION` \ `DATA_COMPRESSION`               |       | Y     | Y     | Y     |       | Y     |        |
-|&nbsp; &nbsp;`TABLESPACE`                                                  |       | Y     | Y     | Y     |       | Y     | Y      |
-|**Index Options**                                                          |       |       |       |       |       |       |        |
-|&nbsp; &nbsp;`INCLUDE`                                                     |       |       |       | Y     |       |       | Y      |
+|Features                                                                   |ANSI_99|DB2_LUW|MS_SQL |Oracle | |SQLite |MySQL  |PostgreSQL|
+|---------------------------------------------------------------------------|:-----:|:-----:|:-----:|:-----:|-|:-----:|:-----:|:------:|
+|**Create Table**:                                                          |       |       |       |       | |       |       |        |
+|&nbsp; &nbsp;`IF NOT EXISTS`                                               | Y     | Y     |       | Y     | | Y     | Y     | Y      |
+|**Data Types**:                                                            |       |       |       |       | |       |       |        |
+|&nbsp; &nbsp; Boolean Types:                                               |       |       |       |       | |       |       |        |
+|&nbsp; &nbsp; &nbsp; &nbsp;`BOOLEAN`                                       | Y     | Y     |       |       | |       | Y     | Y      |
+|&nbsp; &nbsp; &nbsp; &nbsp;`BIT`                                           |       |       | Y     |       | |       |       |        |
+|&nbsp; &nbsp; Integer Types:                                               |       |       |       |       | |       |       |        |
+|&nbsp; &nbsp; &nbsp; &nbsp;`TINYINT`                                       |       |       | Y     |       | |       | Y     |        |
+|&nbsp; &nbsp; &nbsp; &nbsp;`SMALLINT`                                      | Y     | Y     | Y     |       | |       | Y     | Y      |
+|&nbsp; &nbsp; &nbsp; &nbsp;`MEDIUMINT`                                     |       |       |       |       | |       | Y     |        |
+|&nbsp; &nbsp; &nbsp; &nbsp;`INTEGER` \ `INT`                               | Y     | Y     | Y     |       | | Y     | Y     | Y      |
+|&nbsp; &nbsp; &nbsp; &nbsp;`BIGINT`                                        |       | Y     | Y     |       | |       | Y     | Y      |
+|&nbsp; &nbsp; &nbsp; &nbsp;`MONEY`                                         |       |       | Y     |       | |       |       | Y      |
+|&nbsp; &nbsp; &nbsp; &nbsp;`SMALLMONEY`                                    |       |       | Y     |       | |       |       |        |
+|&nbsp; &nbsp; &nbsp; &nbsp;`SERIAL` \ `SMALLSERIAL` \ `BIGSERIAL`          |       |       |       |       | |       |       | Y      |
+|&nbsp; &nbsp; Fixed Point Types:                                           |       |       |       |       | |       |       |        |
+|&nbsp; &nbsp; &nbsp; &nbsp;`DECIMAL`                                       | Y     | Y     | Y     |       | |       | Y     | Y      |
+|&nbsp; &nbsp; &nbsp; &nbsp;`NUMBER`                                        |       |       |       | Y     | |       |       |        |
+|&nbsp; &nbsp; &nbsp; &nbsp;`NUMERIC` \ `NUM`                               | Y     | Y     | Y     |       | | Y     | Y     | Y      |
+|&nbsp; &nbsp; Floating Point Types:                                        |       |       |       |       | |       |       |        |
+|&nbsp; &nbsp; &nbsp; &nbsp;`FLOAT`                                         | Y     | Y     | Y     |       | | Y     | Y     | Y      |
+|&nbsp; &nbsp; &nbsp; &nbsp;`REAL`                                          | Y     | Y     | Y     |       | |       |       | Y      |
+|&nbsp; &nbsp; &nbsp; &nbsp;`DOUBLE`                                        |       |       |       |       | |       | Y     |        |
+|&nbsp; &nbsp; &nbsp; &nbsp;`DOUBLE PRECISION`                              | Y     | Y     |       |       | |       | Y     | Y      |
+|&nbsp; &nbsp; &nbsp; &nbsp;`BINARY_FLOAT` \ `BINARY_DOUBLE`                |       |       |       | Y     | |       |       |        |
+|&nbsp; &nbsp; Character Types:                                             |       |       |       |       | |       |       |        |
+|&nbsp; &nbsp; &nbsp; &nbsp;`CHARACTER` \ `CHAR`                            | Y     | Y     | Y     | Y     | |       | Y     | Y      |
+|&nbsp; &nbsp; &nbsp; &nbsp;`CHAR VARYING`                                  | Y     | Y     |       |       | |       |       | Y      |
+|&nbsp; &nbsp; &nbsp; &nbsp;`VARCHAR`                                       |       | Y     |       |       | |       | Y     | Y      |
+|&nbsp; &nbsp; &nbsp; &nbsp;`VARCHAR2`                                      |       |       |       | Y     | |       |       |        |
+|&nbsp; &nbsp; &nbsp; &nbsp;`TEXT`                                          |       |       | Y     |       | | Y     | Y     | Y      |
+|&nbsp; &nbsp; &nbsp; &nbsp;`LONG`                                          |       |       |       | Y     | |       |       |        |
+|&nbsp; &nbsp; &nbsp; &nbsp;`CLOB`                                          | Y     | Y     |       | Y     | |       |       |        |
+|&nbsp; &nbsp; &nbsp; &nbsp; National Character Types:                      |       |       |       |       | |       |       |        |
+|&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;`NCHAR`                           | Y     | Y     |       | Y     | |       |       |        |
+|&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;`NVARCHAR`                        |       | Y     |       |       | |       |       |        |
+|&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;`NVARCHAR2`                       |       |       |       | Y     | |       |       |        |
+|&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;`NTEXT`                           |       |       | Y     |       | |       |       |        |
+|&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;`NCLOB`                           | Y     | Y     |       | Y     | |       |       |        |
+|&nbsp; &nbsp; &nbsp; &nbsp; Character Set:                                 |       |       |       |       | |       |       |        |
+|&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;`CHARACTER SET`                   | Y     |       |       |       | |       | Y     |        |
+|&nbsp; &nbsp; &nbsp; &nbsp; Collation:                                     |       |       |       |       | |       |       |        |
+|&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;`COLLATE`                         | Y     | Y     | Y     | Y     | | Y     | Y     | Y      |
+|&nbsp; &nbsp; Binary Types:                                                |       |       |       |       | |       |       |        |
+|&nbsp; &nbsp; &nbsp; &nbsp;`BIT`                                           | Y     |       |       |       | |       |       | Y      |
+|&nbsp; &nbsp; &nbsp; &nbsp;`BIT VARYING`                                   | Y     |       |       |       | |       |       | Y      |
+|&nbsp; &nbsp; &nbsp; &nbsp;`BINARY`                                        |       | Y     | Y     |       | |       | Y     |        |
+|&nbsp; &nbsp; &nbsp; &nbsp;`BINARY VARYING`                                |       | Y     |       |       | |       |       |        |
+|&nbsp; &nbsp; &nbsp; &nbsp;`VARBINARY`                                     |       | Y     | Y     |       | |       | Y     |        |
+|&nbsp; &nbsp; &nbsp; &nbsp;`BYTEA`                                         |       |       |       |       | |       |       | Y      |
+|&nbsp; &nbsp; &nbsp; &nbsp;`BLOB`                                          | Y     | Y     |       | Y     | | Y     | Y     |        |
+|&nbsp; &nbsp; &nbsp; &nbsp;`DBBLOB`                                        |       | Y     |       |       | |       |       |        |
+|&nbsp; &nbsp; &nbsp; &nbsp;`RAW`                                           |       |       |       | Y     | |       |       |        |
+|&nbsp; &nbsp; &nbsp; &nbsp;`LONG RAW`                                      |       |       |       | Y     | |       |       |        |
+|&nbsp; &nbsp; &nbsp; &nbsp;`IMAGE`                                         |       |       | Y     |       | |       |       |        |
+|&nbsp; &nbsp; Temporal Types:                                              |       |       |       |       | |       |       |        |
+|&nbsp; &nbsp; &nbsp; &nbsp;`DATE`                                          | Y     | Y     | Y     | Y     | |       | Y     | Y      |
+|&nbsp; &nbsp; &nbsp; &nbsp;`TIME`                                          | Y     | Y     | Y     |       | |       | Y     | Y      |
+|&nbsp; &nbsp; &nbsp; &nbsp;`TIME WITH TIME ZONE`                           | Y     |       |       |       | |       |       | Y      |
+|&nbsp; &nbsp; &nbsp; &nbsp;`DATETIME`                                      |       |       |       | Y     | |       | Y     |        |
+|&nbsp; &nbsp; &nbsp; &nbsp;`DATETIME2`                                     |       |       | Y     |       | |       |       |        |
+|&nbsp; &nbsp; &nbsp; &nbsp;`TIMESTAMP`                                     | Y     | Y     |       | Y     | |       | Y     | Y      |
+|&nbsp; &nbsp; &nbsp; &nbsp;`TIMESTAMP WITH TIME ZONE`                      | Y     |       |       | Y     | |       |       | Y      |
+|&nbsp; &nbsp; &nbsp; &nbsp;`DATETIMEOFFSET`                                |       |       | Y     |       | |       |       |        |
+|&nbsp; &nbsp; &nbsp; &nbsp;`SMALLDATETIME`                                 |       |       | Y     |       | |       |       |        |
+|&nbsp; &nbsp; &nbsp; &nbsp;`YEAR`                                          |       |       |       |       | |       | Y     |        |
+|&nbsp; &nbsp; Collection Types:                                            |       |       |       |       | |       |       |        |
+|&nbsp; &nbsp; &nbsp; &nbsp;`ARRAY`                                         | Y     |       |       |       | |       |       | Y      |
+|&nbsp; &nbsp; &nbsp; &nbsp;`ENUM`                                          |       |       |       |       | |       | Y     | Y      |
+|&nbsp; &nbsp; &nbsp; &nbsp;`SET`                                           |       |       |       |       | |       | Y     |        |
+|&nbsp; &nbsp; Reference Types:                                             |       |       |       |       | |       |       |        |
+|&nbsp; &nbsp; &nbsp; &nbsp;`REF`                                           | Y     |       |       |       | |       |       |        |
+|&nbsp; &nbsp; &nbsp; &nbsp;`ROWID`                                         |       |       |       | Y     | |       |       |        |
+|&nbsp; &nbsp; &nbsp; &nbsp;`UROWID`                                        |       |       |       | Y     | |       |       |        |
+|&nbsp; &nbsp; Object Types:                                                |       |       |       |       | |       |       |        |
+|&nbsp; &nbsp; &nbsp; &nbsp;`JSON`                                          |       |       | Y     | Y     | |       |       | Y      |
+|&nbsp; &nbsp; &nbsp; &nbsp;`XML`                                           |       | Y     |       |       | |       |       | Y      |
+|&nbsp; &nbsp; Other Types:                                                 |       |       |       |       | |       |       |        |
+|&nbsp; &nbsp; &nbsp; &nbsp;`CIDR` \ `INET` \ `MACADDR`                     |       |       |       |       | |       |       | Y      |
+|&nbsp; &nbsp; &nbsp; &nbsp;`UUID`                                          |       |       |       |       | |       |       | Y      |
+|&nbsp; &nbsp; &nbsp; &nbsp;`UNIQUEIDENTIFIER`                              |       |       | Y     |       | |       |       | Y      |
+|                                                                           |       |       |       |       | |       |       |        |
+|**Column Options**                                                         |       |       |       |       | |       |       |        |
+|&nbsp; &nbsp;`NOT NULL`                                                    |       | Y     | Y     | Y     | | Y     | Y     | Y      |
+|&nbsp; &nbsp;`INVISIBLE` \ `HIDDEN`                                        |       | Y     |       | Y     | | Y     | Y     |        |
+|&nbsp; &nbsp;`PRIMARY KEY`                                                 |       | Y     | Y     |       | | Y     | Y     | Y      |
+|&nbsp; &nbsp;`UNIQUE`                                                      |       | Y     | Y     |       | | Y     | Y     | Y      |
+|&nbsp; &nbsp;`CHECK`                                                       |       | Y     | Y     | Y     | | Y     | Y     | Y      |
+|&nbsp; &nbsp;`DEFAULT`                                                     |       | Y     | Y     | Y     | | Y     | Y     | Y      |
+|&nbsp; &nbsp;`SECURED WITH` \ `ENCRYPT` \ `ENCRYPTED WITH`                 |       | Y     | Y     | Y     | |       |       |        |
+|&nbsp; &nbsp;`COMMENT`                                                     |       |       |       |       | | Y     | Y     | Y      |
+|&nbsp; &nbsp;**Generated Column**                                          |       |       |       |       | |       |       |        |
+|&nbsp; &nbsp; &nbsp; &nbsp;`VIRTUAL` \ `GENERATED ALWAYS AS`               |       | Y     | Y     | Y     | | Y     | Y     | Y      |
+|&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;`STORED` \ `VIRTUAL`              |       |       |       | Y     | | Y     | Y     | Y      |
+|&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;`PERSISTED`                       |       |       | Y     |       | |       |       |        |
+|&nbsp; &nbsp;**Identity Options**                                          |       |       |       |       | |       |       |        |
+|&nbsp; &nbsp; &nbsp; &nbsp;`AUTO_INCREMENT`                                |       |       |       |       | | Y     | Y     |        |
+|&nbsp; &nbsp; &nbsp; &nbsp;`GENERATED ALWAYS`                              |       | Y     |       | Y     | |       |       | Y      |
+|&nbsp; &nbsp; &nbsp; &nbsp;`GENERATED BY DEFAULT`                          |       | Y     |       | Y     | |       |       |        |
+|&nbsp; &nbsp; &nbsp; &nbsp;`IDENTITY`                                      |       | Y     | Y     |       | |       |       |        |
+|&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;`START WITH`                      |       | Y     | Y     | Y     | |       |       |        |
+|&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;`INCREMENT BY`                    |       | Y     | Y     | Y     | |       |       |        |
+|**Table Options**                                                          |       |       |       |       | |       |       |        |
+|&nbsp; &nbsp;`COMMENT`                                                     |       |       |       |       | |       | Y     |        |
+|&nbsp; &nbsp;`COMPRESS` \ `COMPRESSION` \ `DATA_COMPRESSION`               |       | Y     | Y     | Y     | |       | Y     |        |
+|&nbsp; &nbsp;`TABLESPACE`                                                  |       | Y     | Y     | Y     | |       | Y     | Y      |
+|**Index Options**                                                          |       |       |       |       | |       |       |        |
+|&nbsp; &nbsp;`INCLUDE`                                                     |       |       | Y     |       | |       |       | Y      |
 -----
 
 # Footnotes:
@@ -132,8 +132,8 @@ The above are extracted out from the following:
     *   |DBMS       |Max Length|
         |-----------|---------:|
         | DB2       | 128      |
-        | Oracle    | 30       |
         | MS-SQL    | 128      |
+        | Oracle    | 30       |
         | SQLite    | >= 128   |
         | MySQL     | 64       |
         | PostgreSQL| 63       |
@@ -144,8 +144,8 @@ The above are extracted out from the following:
     *   |DBMS       |Max Size  |
         |-----------|---------:|
         | DB2       | 2 Gb     |
-        | Oracle    | 4 Gb     |
         | MS-SQL    | 8,060 b*&nbsp;|
+        | Oracle    | 4 Gb     |
         | SQLite    | 1 Gb     |
         | MySQL     | 65,535 b*&nbsp;|
         | PostgreSQL| 1.6 Tb   |
@@ -164,8 +164,8 @@ Always pick the data type that is adequate to store your values.  It is not just
     *   |DBMS       |Type       |
         |-----------|-----------|
         | DB2       |`BOOLEAN`  |
-        | Oracle    |`NUMBER(1)`|
         | MS-SQL    |`BIT`      |
+        | Oracle    |`NUMBER(1)`|
         | SQLite    |`INTEGER`  |
         | MySQL     |`BOOLEAN`  |
         | PostgreSQL|`BOOLEAN`  |
@@ -177,8 +177,8 @@ Always pick the data type that is adequate to store your values.  It is not just
     *   |DBMS       |i8        |u8        |i16       |u16      |i32      |u32          |i64          |u64          |i128         |u128         |
         |-----------|----------|----------|----------|---------|---------|-------------|-------------|-------------|-------------|-------------|
         | DB2       |`SMALLINT`|`SMALLINT`|`SMALLINT`|`INTEGER`|`INTEGER`|`DECIMAL(10)`|`DECIMAL(20)`|`DECIMAL(20)`|`DECIMAL(31)`|`DECIMAL(31)`|
-        | Oracle    |`SMALLINT`|`SMALLINT`|`SMALLINT`|`INTEGER`|`INTEGER`|`NUMBER(10)` |`NUMBER(20)` |`NUMBER(20)` |`NUMBER(31)` |`NUMBER(31)` |
         | MS-SQL    |`TINYINT` |`SMALLINT`|`SMALLINT`|`INTEGER`|`INTEGER`|`BIGINT`     |`BIGINT`     |`NUMERIC(20)`|`NUMERIC(31)`|`NUMERIC(31)`|
+        | Oracle    |`SMALLINT`|`SMALLINT`|`SMALLINT`|`INTEGER`|`INTEGER`|`NUMBER(10)` |`NUMBER(20)` |`NUMBER(20)` |`NUMBER(31)` |`NUMBER(31)` |
         | SQLite    |`INTEGER` |`INTEGER` |`INTEGER` |`INTEGER`|`INTEGER`|`INTEGER`    |`INTEGER`    |`INTEGER`    |`INTEGER`    |`INTEGER`    |
         | MySQL     |`TINYINT` |`TINYINT` |`TINYINT` |`INTEGER`|`INTEGER`|`BIGINT`     |`BIGINT`     |`DECIMAL(20)`|`DECIMAL(31)`|`DECIMAL(31)`|
         | PostgreSQL|`SMALLINT`|`SMALLINT`|`SMALLINT`|`INTEGER`|`INTEGER`|`BIGINT`     |`BIGINT`     |`NUMERIC(20)`|`NUMERIC(31)`|`NUMERIC(31)`|
@@ -210,8 +210,8 @@ Always pick the data type that is adequate to store your values.  It is not just
     *   |DBMS       |Type                          |Max _p_|Default|
         |-----------|------------------------------|------:|------:|
         | DB2       |`DECIMAL[(` _p_ `[ ,` _s_`])]`|     31|    [5](https://www.ibm.com/docs/en/db2/11.5?topic=statements-create-table) |
-        | Oracle    |`NUMBER [(` _p_ `[ ,` _s_`])]`|     38|   [38](https://docs.oracle.com/cd/E11882_01/server.112/e41084/sql_elements001.htm#sthref119) |
         | MS-SQL    |`DECIMAL[(` _p_ `[ ,` _s_`])]`|     38|   [18](https://learn.microsoft.com/en-us/sql/t-sql/data-types/decimal-and-numeric-transact-sql?view=sql-server-ver16) |
+        | Oracle    |`NUMBER [(` _p_ `[ ,` _s_`])]`|     38|   [38](https://docs.oracle.com/cd/E11882_01/server.112/e41084/sql_elements001.htm#sthref119) |
         | SQLite    |`NUMERIC[(` _p_ `[ ,` _s_`])]`|       |    [?](https://www.sqlite.org/datatype3.html#affinity )
         | MySQL     |`DECIMAL[(` _p_ `[ ,` _s_`])]`|     65|   [10](https://dev.MySQL.com/doc/refman/8.4/en/numeric-type-syntax.html) |
         | PostgreSQL|`NUMERIC[(` _p_ `[ ,` _s_`])]`|       | [1000](https://www.postgresql.org/docs/current/datatype-numeric.html#DATATYPE-NUMERIC-DECIMAL) |
@@ -227,8 +227,8 @@ Always pick the data type that is adequate to store your values.  It is not just
     *   |DBMS       |4 Bytes single precision|8 Bytes double precision|`FLOAT[(`_p_`)]`                                                                |
         |-----------|------------------------|------------------------|--------------------------------------------------------------------------------|
         | DB2       |`REAL`                  |`DOUBLE`                | `REAL` : &nbsp;&nbsp;&nbsp;&nbsp;01 <= _p_ <= 24<br>`DOUBLE` : 25 <= _p_ <= 53 |
-        | Oracle    |`BINARY_FLOAT`          |`BINARY_DOUBLE`         | `FLOAT`: &nbsp;&nbsp;            01 <= _p_ <= 24<br>`DOUBLE` : 25 <= _p_ <= 53 |
         | MS-SQL    |`REAL`                  |`FLOAT`                 | `REAL` : &nbsp;&nbsp;&nbsp;&nbsp;01 <= _p_ <= 24<br>`FLOAT` :&nbsp;&nbsp; 25 <= _p_ <= 53 |
+        | Oracle    |`BINARY_FLOAT`          |`BINARY_DOUBLE`         | `FLOAT`: &nbsp;&nbsp;            01 <= _p_ <= 24<br>`DOUBLE` : 25 <= _p_ <= 53 |
         | SQLite    |                        |`REAL`                  |                                                                                |
         | MySQL     |`FLOAT`                 |`DOUBLE`                | `FLOAT`: &nbsp;&nbsp;            00 <= _p_ <= 24<br>`DOUBLE` : 25 <= _p_ <= 53 |
         | PostgreSQL|`REAL`                  |`DOUBLE PRECISION`      | `REAL` : &nbsp;&nbsp;&nbsp;&nbsp;01 <= _p_ <= 24<br>`DOUBLE` : 25 <= _p_ <= 53 |
@@ -238,38 +238,39 @@ Always pick the data type that is adequate to store your values.  It is not just
 
 ### Character Types:
 * The total storable character is dependent on the character set setup with for the database.
-    * Some DBMS default to `LATIN1` which uses one byte for one character.
+    * Character data types are the most varied in their default and maximum size among all the mentioned DBMS.
+        * Some DBMS default to `LATIN1` which uses one byte for one character.
     * Do configure your database to enable **UTF-8** character set.
         * Optionally for business application, do consider case insensitive collation.
     *   |DBMS       |Command|
         |-----------|-------|
         | DB2       |`CREATE DATABASE` myDBMS `USING CODESET` UTF-8 `TERRITORY` US `COLLATE USING` UCA500R1_CLDR120_CI_AI;|
-        | Oracle    |`CREATE DATABASE` myDBMS `CHARACTER SET` AL32UTF8 `COLLATE` UTF8_CI; `SET NLS_SORT =` 'GENERIC_M_CI_AI'; `SET NLS_COMP =` 'LINGUISTIC';|
         | MS-SQL    |`CREATE DATABASE` myDBMS `COLLATE` Latin1_General_100_CI_AI_SC_UTF8;|
+        | Oracle    |`CREATE DATABASE` myDBMS `CHARACTER SET` AL32UTF8 `COLLATE` UTF8_CI; `SET NLS_SORT =` 'GENERIC_M_CI_AI'; `SET NLS_COMP =` 'LINGUISTIC';|
         | SQLite    |`PRAGMA encoding=`'UTF-8'; `PRAGMA case_sensitive_like =` OFF;|
         | MySQL     |`CREATE DATABASE` myDBMS `COLLATE` utf8mb4 `COLLATE` [utf8mb4_0900_ai_ci \| utf8mb4_unicode_ci];|
         | PostgreSQL|`CREATE DATABASE` myDBMS `ENCODING` 'UTF8' `LC_COLLATE =` 'en_US.utf8', `LC_CTYPE =` 'en_US.utf8';|
 
 * All DBMS listed above support fixed and variable character type with the following variance:
-    *   |DBMS       |Fixed Type         |Fix Max _s_|Default|Variable Type      |Var Max _s_|Default|
-        |-----------|-------------------|----------:|------:|-------------------|----------:|------:|
-        | DB2       |`CHAR(` _s_ `)`    |        255|       |`VARCHAR(`  _s_ `)`|     32,672|       |
-        | Oracle    |`CHAR(` _s_ `)`    |      2,000|       |`VARCHAR2(` _s_ `)`|      4,000|       |
-        | MS-SQL    |`CHAR(` _s_ `)`    |      8,000|       |`VARCHAR(`  _s_ `)`|      8,000|       |
-        | SQLite    |`CHAR(` _s_ `)`    |      2,000|       |`VARCHAR(`  _s_ `)`|           |       |
-        | MySQL     |`CHAR(` _s_ `)`    |        255|       |`VARCHAR(`  _s_ `)`|     65,535|       |
-        | PostgreSQL|`CHAR(` _s_ `)`    | 10,485,760|       |`VARCHAR(`  _s_ `)`| 10,485,760|       |
+    *   |DBMS       |Fixed Type         |Fix Max _s_|Default|Variable Type              |Var Max _s_ |Default|
+        |-----------|-------------------|----------:|------:|---------------------------|-----------:|------:|
+        | DB2       |`CHAR[(` _s_ `)]`  |        255|      1|`VARCHAR(`  _s_ `)`        |      32,672|      1|
+        | MS-SQL    |`CHAR[(` _s_ `)]`  |      8,000|      1|`VARCHAR[(` _s_ `\| MAX )]`|       8,000|      1|
+        | Oracle    |`CHAR(` _s_ `)`    |      2,000|       |`VARCHAR2(` _s_ `)`        |       4,000|       |
+        | SQLite    |`CHAR(` _s_ `)`    |      2,000|       |`VARCHAR(`  _s_ `)`        |            |       |
+        | MySQL     |`CHAR(` _s_ `)`    |        255|       |`VARCHAR(`  _s_ `)`        |      16,381|       |
+        | PostgreSQL|`CHAR(` _s_ `)`    | 10,485,760|       |`VARCHAR(`  _s_ `)`        |  10,485,760|       |
         * where the elements between the brackets are optional.
         * _s_ denotes the length.
     * The number of character will be depended on the character set setup for the database.
     * It is good practice to specify the length because different DBMS have different default length.
 
 * The following are data type for very large character string with the following variance:
-    *   |DBMS       |Type             |      Max _s_|       Default|
+    *   |DBMS       |Type             |Max _s_      |Default       |
         |-----------|-----------------|------------:|-------------:|
-        | DB2       |`CLOB(` _s_ `)`  |2,147,483,646|     1,048,576|
-        | Oracle    |`CLOB`           |             | 4,294,967,295|
+        | DB2       |`CLOB(` _s_ `)`  |2,147,483,647|     1,048,576|
         | MS-SQL    |`TEXT` \ `VARCHAR( MAX )`|     | 2,147,483,647|
+        | Oracle    |`CLOB`           |             | 4,294,967,295|
         | SQLite    |`TEXT`           |             |              |
         | MySQL     |`LONGTEXT`       |             | 4,294,967,295|
         | PostgreSQL|`TEXT`           |             | 1,063,256,064|
@@ -277,46 +278,48 @@ Always pick the data type that is adequate to store your values.  It is not just
 
 #### Binary Types:
 * All DBMS listed above support this binary data type with the following variance:
-    *   |DBMS       |Fixed Type       |  Fix Max _s_|Default|Variable Type       |Var Max _s_|       Default|
-        |-----------|-----------------|------------:|------:|--------------------|----------:|-------------:|
-        | DB2       |`BINARY(` _s_ `)`|          255|       |`VARBINARY(` _s_ `)`|     32,672|              |
-        | Oracle    |`RAW(` _s_ `)`   |        2,000|       |`LONG RAW`          |           | 2,147,483,648|
-        | MS-SQL    |`BINARY` _s_ `)` |        8,000|       |`VARBINARY( MAX )`  |           | 2,147,483,648|
-        | SQLite    |                 |             |       |`BLOB`              |           | 1,000,000,000|
-        | MySQL     |`BINARY(` _s_ `)`|          255|       |`VARBINARY(` _s_ `)`|     65,535|              |
-        | PostgreSQL|                 |             |       |`BYTEA`             |           | 1,063,256,064|
-        * _s_ denotes the length.
+    *   |DBMS       |Fixed Type         |Fix Max _s_|Default|Variable Type                |Var Max _s_|Default       |
+        |-----------|-------------------|----------:|------:|-----------------------------|----------:|-------------:|
+        | DB2       |`BINARY(` _s_ `)`  |        255|      1|`VARBINARY(` _s_ `)`         |     32,672|             1|
+        | MS-SQL    |`BINARY[(` _s_ `)]`|      8,000|      1|`VARBINARY[(` _s_ `\| MAX )]`|      8,000|             1|
+        | Oracle    |`RAW(` _s_ `)`     |      2,000|       |`LONG RAW`                   |           | 2,147,483,648|
+        | SQLite    |                   |           |       |`BLOB`                       |           | 1,000,000,000|
+        | MySQL     |`BINARY(` _s_ `)`  |        255|      1|`VARBINARY(` _s_ `)`         |     65,531|              |
+        | PostgreSQL|                   |           |       |`BYTEA`                      |           | 1,063,256,064|
+        * _s_ denotes the length
 
 * The following are data type for large binary data with the following variance:
-    *   |DBMS       |Type            |      Max _s_|      Default|
-        |-----------|----------------|------------:|------------:|
-        | DB2       |`BLOB(` _s_ `)` |2,147,483,646|2,147,483,647|
-        | Oracle    |`BLOB`          |             |4,294,967,295|
-        | MS-SQL    |`VARBINARY(MAX)`|             |2,147,483,647|
-        | SQLite    |`BLOB`          |             |1,000,000,000|
-        | MySQL     |`LONGBLOB`      |             |4,294,967,295|
-        | PostgreSQL|`BYTEA`         |             |1,063,256,064|
+    *   |DBMS       |Type                  |Max _s_      |Default      |
+        |-----------|----------------------|------------:|------------:|
+        | DB2       |`BLOB(` _s_ `)`       |2,147,483,647|    1,048,576|
+        | MS-SQL    |`VARBINARY[(` _s_ | `MAX )]`|  8,000|2,147,483,647|
+        | Oracle    |`BLOB`                |             |4,294,967,295|
+        | SQLite    |`BLOB`                |             |1,000,000,000|
+        | MySQL     |`LONGBLOB`            |             |4,294,967,295|
+        | PostgreSQL|`BYTEA`               |             |1,063,256,064|
+        * _s_ denotes the length
+        * MS_SQL `VARBINARY( MAX )` will allow a larger storage size.
 
 #### National Character
 * The term national character set refers to an alternative character set that enables you to store Unicode character data in a database that does not have a Unicode database character set.  It is better that you setup your database to default to UTF-8 character set.
-    *   |DBMS       |Fixed Type        |Default _s_|Max _s_    |Variable Type       |Var Max _s_|Default|
-        |-----------|------------------|----------:|----------:|--------------------|----------:|------:|
-        | DB2       |`NCHAR[(` _s_ `)]`| 1         | 255       |`NVARCHAR(` _s_ `)` |     32,672|       |
-        | Oracle    |`NCHAR[(` _s_ `)]`| 1         | 2,000     |`NVARCHAR2(` _s_ `)`|      4,000|       |
-        | MS-SQL    |`NCHAR[(` _s_ `)]`|           | 4,000     |`NVARCHAR(` _s_ `)` |      4,000|       |
-        | SQLite    |`TEXT`            |           |           |`TEXT`              |           |       |
-        | MySQL     |`NCHAR(` _s_ `)`  | 1         | 255       |`NVARCHAR(`  _s_ `)`|     65,535|       |
-        | PostgreSQL|`CHAR(` _s_ `)`   | 1         | 10,485,760|`VARCHAR(`  _s_ `)` | 10,485,760|       |
+    *   |DBMS       |Fixed Type        |Max _s_    |Default|Variable Type       |Var Max _s_|Default|
+        |-----------|------------------|----------:|------:|--------------------|----------:|------:|
+        | DB2       |`NCHAR[(` _s_ `)]`| 63        | 1     |`NVARCHAR(` _s_ `)` |      8,168|       |
+        | MS-SQL    |`NCHAR[(` _s_ `)]`| 4,000     |       |`NVARCHAR(` _s_ `)` |      4,000|       |
+        | Oracle    |`NCHAR[(` _s_ `)]`| 1,000     | 1     |`NVARCHAR2(` _s_ `)`|      2,000|       |
+        | SQLite    |`TEXT`            |           |       |`TEXT`              |           |       |
+        | MySQL     |`NCHAR(` _s_ `)`  | 255       | 1     |`NVARCHAR(`  _s_ `)`|     65,535|       |
+        | PostgreSQL|`CHAR(` _s_ `)`   | 10,485,760| 1     |`VARCHAR(`  _s_ `)` | 10,485,760|       |
         * _s_ denotes the length.
         * National Character set uses 2 bytes to store a character and may not be storage wise efficient.
     * It is good practice to specify the length because different DBMS have different default length.
 
 * The following are data type for large character data with the following variance:
-    *   |DBMS       |Type             |      Max _s_|       Default|
+    *   |DBMS       |Type             |Max _s_      |Default       |
         |-----------|-----------------|------------:|-------------:|
-        | DB2       |`NCLOB(` _s_ `)` |2,147,483,646|     1,048,576|
+        | DB2       |`NCLOB[(` _s_ `)`|   53,687,091|     1,048,576|
+        | MS-SQL    |`NTEXT` \ `NVARCHAR( MAX )`|   | 1,073,741,823|
         | Oracle    |`NCLOB`          |             | 4,294,967,295|
-        | MS-SQL    |`NTEXT` \ `NVARCHAR( MAX )`|   | 2,147,483,647|
         | SQLite    |`TEXT`           |             |              |
         | MySQL     |`LONGTEXT`       |             | 4,294,967,295|
         | PostgreSQL|`TEXT`           |             | 1,063,256,064|
@@ -328,8 +331,8 @@ Always pick the data type that is adequate to store your values.  It is not just
     *   |DBMS       |Date Only Type|Time Only Type |Date w Time|Timestamp Type      |Max _p_|Default _p_|`WITH TIME ZONE`|
         |-----------|--------------|-------------- |-----------|--------------------|------:|----------:|:--------------:|
         | DB2       |`DATE`        |`TIME`         |           |`TIMESTAMP(` _p_ `)`|     12|          6|                |
-        | Oracle    |`DATE`        |               |           |`TIMESTAMP(` _p_ `)`|      6|          6| Y              |
         | MS-SQL    |`DATE`        |`TIME(` _p_ `)`|`DATETIME` |`DATETIME2(` _p_ `)`|      7|          7|`DATETIMEOFFSET`|
+        | Oracle    |`DATE`        |               |           |`TIMESTAMP(` _p_ `)`|      6|          6| Y              |
         | MySQL     |`DATE`        |`TIME(` _p_ `)`|`DATETIME` |`TIMESTAMP(` _p_ `)`|      6|          6|                |
         | PostgreSQL|`DATE`        |`TIME(` _p_ `)`|`DATETIME` |`TIMESTAMP(` _p_ `)`|      6|          6| Y              |
         * _p_ denotes the precision of the fractional second. 
@@ -359,8 +362,8 @@ Always pick the data type that is adequate to store your values.  It is not just
     *   |DBMS       |Type  |
         |-----------|------|
         | DB2       |`JSON`|
-        | Oracle    |`VARCHAR2(4000) CHECK (json_data IS JSON)`|
         | MS-SQL    |`NVARCHAR(MAX) JSON`|
+        | Oracle    |`VARCHAR2(4000) CHECK (json_data IS JSON)`|
         | SQLite    |`TEXT`|
         | MySQL     |`JSON`|
         | PostgreSQL|`JSON` \ `JSONB`|
@@ -370,8 +373,8 @@ Always pick the data type that is adequate to store your values.  It is not just
     *   |DBMS       |Type  |
         |-----------|------|
         | DB2       |`UUID`|
-        | Oracle    |`RAW(16)`|
         | MS-SQL    |`UNIQUEIDENTIFIER`|
+        | Oracle    |`RAW(16)`|
         | SQLite    |`BLOB`|
         | MySQL     |`UUID`|
         | PostgreSQL|`UUID`|
@@ -383,8 +386,8 @@ Always pick the data type that is adequate to store your values.  It is not just
     *   |DBMS       |Column Definition|
         |-----------|-----------------|
         | DB2       | _colName_ _type_ `[NOT NULL]  [UNIQUE\|PRIMARY KEY]` `[CHECK(` _condition_ `)] [DEFAULT` _value_ `] [SECURED WITH` _label_ `] [IMPLICITLY HIDDEN]`|
-        | Oracle    | _colName_ _type_ `[INVISIBLE] [DEFAULT` _value_ `] [ENCRYPT `_spec_ `] [NOT NULL] [CHECK(` _condition_ `)] [UNIQUE\|PRIMARY KEY]`|
         | MS-SQL    | _colName_ _type_ `[NOT NULL]  [DEFAULT` _value_ `] [HIDDEN]` `[ENCRYPTED WITH(` _spec_ `)] [CHECK(` _condition_ `)] [UNIQUE\|PRIMARY KEY]`|
+        | Oracle    | _colName_ _type_ `[INVISIBLE] [DEFAULT` _value_ `] [ENCRYPT `_spec_ `] [NOT NULL] [CHECK(` _condition_ `)] [UNIQUE\|PRIMARY KEY]`|
         | SQLite    | _colName_ _type_ `[NOT NULL]  [DEFAULT` _value_ `] [HIDDEN]` `[CHECK(` _condition_ `)] [UNIQUE\|PRIMARY KEY]`|
         | MySQL     | _colName_ _type_ `[NOT NULL]  [DEFAULT` _value_ `] [INVISIBLE]` `[CHECK(` _condition_ `)] [UNIQUE\|PRIMARY KEY] [COMMENT =` 'string' `]`|
         | PostgreSQL| _colName_ _type_ `[NOT NULL]  [DEFAULT` _value_ `] [CHECK(` _condition_ `)] [UNIQUE\|PRIMARY KEY]`|
@@ -394,8 +397,8 @@ Always pick the data type that is adequate to store your values.  It is not just
     *   |DBMS       |Column Definition|
         |-----------|-----------------|
         | DB2       | _colName_ _type_ `GENERATED ALWAYS AS(` _expr_ `)`|
-        | Oracle    | _colName_ _type_ `GENERATED ALWAYS AS(` _expr_ `) VIRTUAL`|
         | MS-SQL    | _colName_                         `AS(` _expr_ `) [PERSISTED]`|
+        | Oracle    | _colName_ _type_ `GENERATED ALWAYS AS(` _expr_ `) VIRTUAL`|
         | SQLite    | _colName_ _type_ `GENERATED ALWAYS AS(` _expr_ `) [VIRTUAL\|STORED]`|
         | MySQL     | _colName_ _type_ `GENERATED ALWAYS AS(` _expr_ `) [VIRTUAL\|STORED]`|
         | PostgreSQL| _colName_ _type_ `GENERATED ALWAYS AS(` _expr_ `) STORED`|
@@ -407,8 +410,8 @@ Always pick the data type that is adequate to store your values.  It is not just
     *   |DBMS       |Column Definition|
         |-----------|-----------------|
         | DB2       | _colName_ _type_ `GENERATED BY DEFAULT AS IDENTITY( START WITH` _start_ `INCREMENT BY` _incr_ `) PRIMARY KEY`|
-        | Oracle    | _colName_ _type_ `GENERATED BY DEFAULT AS IDENTITY( START WITH` _start_ `INCREMENT BY` _incr_ `) PRIMARY KEY`|
         | MS-SQL    | _colName_ _type_ `IDENTITY(` _start_ ,_increment_ `) PRIMARY KEY`|
+        | Oracle    | _colName_ _type_ `GENERATED BY DEFAULT AS IDENTITY( START WITH` _start_ `INCREMENT BY` _incr_ `) PRIMARY KEY`|
         | SQLite    | _colName_ _type_ `PRIMARY KEY AUTOINCREMENT`|
         | MySQL     | _colName_ _type_ `AUTO_INCREMENT PRIMARY KEY` |
         | PostgreSQL| _colName_ _type_ `GENERATED BY DEFAULT AS IDENTITY( INCREMENT BY` _incr_ `START WITH` _start_ `)`|
@@ -431,8 +434,8 @@ Always pick the data type that is adequate to store your values.  It is not just
     *   |DBMS       |Column Definition|
         |-----------|-----------------|
         | DB2       | `COMMENT ON COLUMN` _tabName_**.**_colName_ `IS` 'string'|
-        | Oracle    | `COMMENT ON COLUMN` _tabName_**.**_colName_ `IS` 'string'|
         | MS-SQL    | `EXEC sp_addextendedproperty @name = N'MS_Description' ,@value = N`'string' `,@level1type = N'Table' ,@level1name = `_tabName_ `,@level2type = N'Column', @level2name = `_colName_|
+        | Oracle    | `COMMENT ON COLUMN` _tabName_**.**_colName_ `IS` 'string'|
         | SQLite    |                 |
         | MySQL     | _colName_ _type_ `COMMENT` 'string'|
         | PostgreSQL| `COMMENT ON COLUMN` _tabName_**.**_colName_ `IS` 'string'|
@@ -442,8 +445,8 @@ Always pick the data type that is adequate to store your values.  It is not just
     *   |DBMS       |Column Definition|
         |-----------|-----------------|
         | DB2       | `CREATE TABLE` tabName `(...) IN`         _tabspace_name_ `[COMPRESS YES]`|
-        | Oracle    | `CREATE TABLE` tabName `(...) TABLESPACE` _tabspace_name_ `[COMPRESS]`|
         | MS-SQL    | `CREATE TABLE` tabName `(...) [WITH (DATA_COMPRESSION = PAGE)]` `ON` _filegroup_name_|
+        | Oracle    | `CREATE TABLE` tabName `(...) TABLESPACE` _tabspace_name_ `[COMPRESS]`|
         | SQLite    |                 |
         | MySQL     | `CREATE TABLE` tabName `(...) TABLESPACE` _tabspace_name_|
         | PostgreSQL| `CREATE TABLE` tabName `(...) TABLESPACE` _tabspace_name_|
@@ -460,8 +463,8 @@ Always pick the data type that is adequate to store your values.  It is not just
     *   |DBMS       |Column Definition|
         |-----------|-----------------|
         | DB2       | `COMMENT ON TABLE` _tabName_ `IS` 'string'|
-        | Oracle    | `COMMENT ON TABLE` _tabName_ `IS` 'string'|
         | MS-SQL    | `EXEC sp_addextendedproperty @name = N'MS_Description' ,@value = N`'string' `,@level1type = N'Table' ,@level1name = `_tabName_|
+        | Oracle    | `COMMENT ON TABLE` _tabName_ `IS` 'string'|
         | SQLite    |                 |
         | MySQL     | `CREATE TABLE` tabName `(...) COMMENT =` 'string'|
         | PostgreSQL| `COMMENT ON TABLE` _tabName_ `IS` 'string'|
@@ -471,42 +474,42 @@ Always pick the data type that is adequate to store your values.  It is not just
 
 # Recommendations for ORM frameworks
 * To be compatible across these DBMS, unfortunately, we should code to the lowest common denominator when we map from a programming language into a table:
-*   |Primitives Type                | C |C# |GO |Java|Python|Rust| V |Zig|DB2           |Oracle         |MS-SQL        |SQLite      |MySQL         |PostgreSQL |
-    |-------------------------------|:-:|:-:|:-:|:--:|:----:|:--:|:-:|:-:|--------------|---------------|--------------|------------|--------------|------------|
-    |bool \ boolean                 | Y | Y | Y | Y  | Y    | Y  | Y | Y |`BOOLEAN`     |`NUMBER(1)`    |`BIT`         |`INTEGER`   |`BOOLEAN`     |`BOOLEAN`   |
-    |byte                           |   | Y | Y | Y  |      |    |   |   |`GRAPHIC(1)`  |`RAW(1)`       |`VARBINARY(1)`|`BLOB`      |`BINARY(1)`   |`BIT(1)`    |
-    |sbyte                          |   | Y |   |    |      |    |   |   |`SMALLINT`    |`SMALLINT`     |`TINYINT`     |`INTEGER`   |`TINYINT`     |`SMALLINT`  |
-    |char <sup>1</sup>              | Y |   |   |    |      |    |   |   |`CHAR(1)`     |`CHAR(1)`      |`CHAR(1)`     |`TEXT`      |`CHAR(1)`     |`CHAR(1)`   |
-    |char <sup>2</sup>              |   | Y |   | Y  |      | Y  |   |   |`CHAR(2)`     |`CHAR(2)`      |`CHAR(2)`     |`TEXT`      |`CHAR(2)`     |`CHAR(2)`   |
-    |i8                             |   |   | Y |    |      | Y  | Y | Y |`SMALLINT`    |`SMALLINT`     |`TINYINT`     |`INTEGER`   |`TINYINT`     |`SMALLINT`  |
-    |u8 <sup>a</sup>                |   |   | Y |    |      | Y  | Y | Y |`SMALLINT`    |`SMALLINT`     |`SMALLINT`    |`INTEGER`   |`SMALLINT`    |`SMALLINT`  |
-    |i16                            |   |   | Y |    |      | Y  | Y | Y |`SMALLINT`    |`SMALLINT`     |`SMALLINT`    |`INTEGER`   |`SMALLINT`    |`SMALLINT`  |
-    |u16 <sup>b</sup>               |   |   | Y |    |      | Y  | Y | Y |`INTEGER`     |`INTEGER`      |`INTEGER`     |`INTEGER`   |`INTEGER`     |`INTEGER`   |
-    |i32                            |   |   | Y |    |      | Y  | Y | Y |`INTEGER`     |`INTEGER`      |`INTEGER`     |`INTEGER`   |`INTEGER`     |`INTEGER`   |
-    |u32 <sup>c</sup>               |   |   | Y |    |      | Y  | Y | Y |`DECIMAL(10)` |`NUMBER(10)`   |`BIGINT`      |`INTEGER`   |`BIGINT`      |`BIGINT`    |
-    |i64                            |   |   | Y |    |      | Y  | Y | Y |`DECIMAL(20)` |`NUMBER(20)`   |`BIGINT`      |`INTEGER`   |`BIGINT`      |`BIGINT`    |
-    |u64 <sup>d</sup>               |   |   | Y |    |      | Y  | Y | Y |`DECIMAL(20)` |`NUMBER(20)`   |`NUMERIC(20)` |`INTEGER`   |`DECIMAL(20)` |`NUMERIC(20)`|
-    |i128                           |   |   |   |    |      | Y  |_Y_| Y |`DECIMAL(31)` |`NUMBER(31)`   |`NUMERIC(31)` |`INTEGER`   |`DECIMAL(31)` |`NUMERIC(31)`|
-    |u128 <sup>e</sup>              |   |   |   |    |      | Y  |_Y_| Y |`DECIMAL(31)` |`NUMBER(31)`   |`NUMERIC(31)` |`INTEGER`   |`DECIMAL(31)` |`NUMERIC(31)`|
-    |short                          | Y | Y |   | Y  |      |    |   |   |`SMALLINT`    |`SMALLINT`     |`SMALLINT`    |`INTEGER`   |`SMALLINT`    |`SMALLINT`  |
-    |ushort <sup>b</sup>            |   | Y |   |    |      |    |   |   |`INTEGER`     |`INTEGER`      |`INTEGER`     |`INTEGER`   |`INTEGER`     |`INTEGER`   |
-    |unsigned short <sup>b</sup>    |   |   |   |    |      |    |   |   |`INTEGER`     |`INTEGER`      |`INTEGER`     |`INTEGER`   |`INTEGER`     |`INTEGER`   |
-    |int                            | Y | Y | Y | Y  | Y    |    | Y |   |`INTEGER`     |`INTEGER`      |`INTEGER`     |`INTEGER`   |`INTEGER`     |`INTEGER`   |
-    |uint <sup>c</sup>              |   | Y | Y |    |      |    |   |   |`DECIMAL(10)` |`NUMBER(10)`   |`NUMERIC(10)` |`NUMBER(10)`|`DECIMAL(10)` |`BIGINT`    |
-    |unsigned int <sup>c</sup>      | Y |   |   |    |      |    |   |   |`DECIMAL(10)` |`NUMBER(10)`   |`NUMERIC(10)` |`NUMBER(10)`|`DECIMAL(10)` |`BIGINT`    |
-    |long                           | Y | Y |   | Y  |      |    |   |   |`DECIMAL(20)` |`NUMBER(20)`   |`NUMERIC(20)` |`NUMBER(20)`|`DECIMAL(20)` |`NUMBER(20)`|
-    |ulong <sup>e</sup>             |   | Y |   |    |      |    |   |   |`DECIMAL(20)` |`NUMBER(20)`   |`NUMERIC(20)` |`NUMBER(20)`|`DECIMAL(20)` |`NUMBER(20)`|
-    |unsigned long <sup>e</sup>     | Y |   |   |    |      |    |   |   |`DECIMAL(20)` |`NUMBER(20)`   |`NUMERIC(20)` |`NUMBER(20)`|`DECIMAL(20)` |`NUMBER(20)`|
-    |long long                      | Y |   |   |    |      |    |   |   |`DECIMAL(31)` |`NUMBER(31)`   |`NUMERIC(31)` |`NUMBER(31)`|`DECIMAL(31)` |`NUMBER(31)`|
-    |unsigned long long <sup>e</sup>| Y |   |   |    |      |    |   |   |`DECIMAL(31)` |`NUMBER(31)`   |`NUMERIC(31)` |`NUMBER(31)`|`DECIMAL(31)` |`NUMBER(31)`|
-    |f16                            |   |   |   |    |      |    |   | Y |`REAL`        |`BINARY_FLOAT` |`REAL`        |`REAL`      |`REAL`        |`REAL`      |
-    |f32 \ float32                  |   |   | Y |    |      | Y  | Y | Y |`REAL`        |`BINARY_FLOAT` |`REAL`        |`REAL`      |`REAL`        |`REAL`      |
-    |f64 \ float64                  |   |   | Y |    |      | Y  | Y | Y |`DOUBLE`      |`BINARY_DOUBLE`|`FLOAT`       |`REAL`      |`DOUBLE`      |`DOUBLE PRECISION`|
-    |float                          | Y | Y |   | Y  | Y    |    |   |   |`REAL`        |`BINARY_FLOAT` |`REAL`        |`REAL`      |`REAL`        |`REAL`      |
-    |double                         | Y | Y |   | Y  |      |    |   |   |`DOUBLE`      |`BINARY_DOUBLE`|`FLOAT`       |`REAL`      |`DOUBLE`      |`DOUBLE PRECISION`|
-    |decimal                        |   | Y |   |    |      |    |   |   |`NUMERIC(p,s)`|`NUMBER(p,s)`  |`NUMERIC(p,s)`|`REAL`      |`DECIMAL(p,s)`|`NUMERIC(p,s)`|
-    |long double                    | Y |   |   |    |      |    |   |   |`NUMERIC(p,s)`|`NUMBER(p,s)`  |`NUMERIC(p,s)`|`REAL`      |`DECIMAL(p,s)`|`NUMERIC(p,s)`|
-    |                               |   |   |   |    |      |    |   |   |              |               |              |            |              |              |
+*   |Primitives Type                | C |C# |GO |Java|Python|Rust| V |Zig|DB2           |MS-SQL        |Oracle         |SQLite      |MySQL         |PostgreSQL  |
+    |-------------------------------|:-:|:-:|:-:|:--:|:----:|:--:|:-:|:-:|--------------|--------------|---------------|------------|--------------|------------|
+    |bool \ boolean                 | Y | Y | Y | Y  | Y    | Y  | Y | Y |`BOOLEAN`     |`BIT`         |`NUMBER(1)`    |`INTEGER`   |`BOOLEAN`     |`BOOLEAN`   |
+    |byte                           |   | Y | Y | Y  |      |    |   |   |`GRAPHIC(1)`  |`VARBINARY(1)`|`RAW(1)`       |`BLOB`      |`BINARY(1)`   |`BIT(1)`    |
+    |sbyte                          |   | Y |   |    |      |    |   |   |`SMALLINT`    |`TINYINT`     |`SMALLINT`     |`INTEGER`   |`TINYINT`     |`SMALLINT`  |
+    |char <sup>1</sup>              | Y |   |   |    |      |    |   |   |`CHAR(1)`     |`CHAR(1)`     |`CHAR(1)`      |`TEXT`      |`CHAR(1)`     |`CHAR(1)`   |
+    |char <sup>2</sup>              |   | Y |   | Y  |      | Y  |   |   |`CHAR(2)`     |`CHAR(2)`     |`CHAR(2)`      |`TEXT`      |`CHAR(2)`     |`CHAR(2)`   |
+    |i8                             |   |   | Y |    |      | Y  | Y | Y |`SMALLINT`    |`TINYINT`     |`SMALLINT`     |`INTEGER`   |`TINYINT`     |`SMALLINT`  |
+    |u8 <sup>a</sup>                |   |   | Y |    |      | Y  | Y | Y |`SMALLINT`    |`SMALLINT`    |`SMALLINT`     |`INTEGER`   |`SMALLINT`    |`SMALLINT`  |
+    |i16                            |   |   | Y |    |      | Y  | Y | Y |`SMALLINT`    |`SMALLINT`    |`SMALLINT`     |`INTEGER`   |`SMALLINT`    |`SMALLINT`  |
+    |u16 <sup>b</sup>               |   |   | Y |    |      | Y  | Y | Y |`INTEGER`     |`INTEGER`     |`INTEGER`      |`INTEGER`   |`INTEGER`     |`INTEGER`   |
+    |i32                            |   |   | Y |    |      | Y  | Y | Y |`INTEGER`     |`INTEGER`     |`INTEGER`      |`INTEGER`   |`INTEGER`     |`INTEGER`   |
+    |u32 <sup>c</sup>               |   |   | Y |    |      | Y  | Y | Y |`DECIMAL(10)` |`BIGINT`      |`NUMBER(10)`   |`INTEGER`   |`BIGINT`      |`BIGINT`    |
+    |i64                            |   |   | Y |    |      | Y  | Y | Y |`DECIMAL(20)` |`BIGINT`      |`NUMBER(20)`   |`INTEGER`   |`BIGINT`      |`BIGINT`    |
+    |u64 <sup>d</sup>               |   |   | Y |    |      | Y  | Y | Y |`DECIMAL(20)` |`NUMERIC(20)` |`NUMBER(20)`   |`INTEGER`   |`DECIMAL(20)` |`NUMERIC(20)`|
+    |i128                           |   |   |   |    |      | Y  |_Y_| Y |`DECIMAL(31)` |`NUMERIC(31)` |`NUMBER(31)`   |`INTEGER`   |`DECIMAL(31)` |`NUMERIC(31)`|
+    |u128 <sup>e</sup>              |   |   |   |    |      | Y  |_Y_| Y |`DECIMAL(31)` |`NUMERIC(31)` |`NUMBER(31)`   |`INTEGER`   |`DECIMAL(31)` |`NUMERIC(31)`|
+    |short                          | Y | Y |   | Y  |      |    |   |   |`SMALLINT`    |`SMALLINT`    |`SMALLINT`     |`INTEGER`   |`SMALLINT`    |`SMALLINT`  |
+    |ushort <sup>b</sup>            |   | Y |   |    |      |    |   |   |`INTEGER`     |`INTEGER`     |`INTEGER`      |`INTEGER`   |`INTEGER`     |`INTEGER`   |
+    |unsigned short <sup>b</sup>    |   |   |   |    |      |    |   |   |`INTEGER`     |`INTEGER`     |`INTEGER`      |`INTEGER`   |`INTEGER`     |`INTEGER`   |
+    |int                            | Y | Y | Y | Y  | Y    |    | Y |   |`INTEGER`     |`INTEGER`     |`INTEGER`      |`INTEGER`   |`INTEGER`     |`INTEGER`   |
+    |uint <sup>c</sup>              |   | Y | Y |    |      |    |   |   |`DECIMAL(10)` |`NUMERIC(10)` |`NUMBER(10)`   |`NUMBER(10)`|`DECIMAL(10)` |`BIGINT`    |
+    |unsigned int <sup>c</sup>      | Y |   |   |    |      |    |   |   |`DECIMAL(10)` |`NUMERIC(10)` |`NUMBER(10)`   |`NUMBER(10)`|`DECIMAL(10)` |`BIGINT`    |
+    |long                           | Y | Y |   | Y  |      |    |   |   |`DECIMAL(20)` |`NUMERIC(20)` |`NUMBER(20)`   |`NUMBER(20)`|`DECIMAL(20)` |`NUMBER(20)`|
+    |ulong <sup>e</sup>             |   | Y |   |    |      |    |   |   |`DECIMAL(20)` |`NUMERIC(20)` |`NUMBER(20)`   |`NUMBER(20)`|`DECIMAL(20)` |`NUMBER(20)`|
+    |unsigned long <sup>e</sup>     | Y |   |   |    |      |    |   |   |`DECIMAL(20)` |`NUMERIC(20)` |`NUMBER(20)`   |`NUMBER(20)`|`DECIMAL(20)` |`NUMBER(20)`|
+    |long long                      | Y |   |   |    |      |    |   |   |`DECIMAL(31)` |`NUMERIC(31)` |`NUMBER(31)`   |`NUMBER(31)`|`DECIMAL(31)` |`NUMBER(31)`|
+    |unsigned long long <sup>e</sup>| Y |   |   |    |      |    |   |   |`DECIMAL(31)` |`NUMERIC(31)` |`NUMBER(31)`   |`NUMBER(31)`|`DECIMAL(31)` |`NUMBER(31)`|
+    |f16                            |   |   |   |    |      |    |   | Y |`REAL`        |`REAL`        |`BINARY_FLOAT` |`REAL`      |`REAL`        |`REAL`      |
+    |f32 \ float32                  |   |   | Y |    |      | Y  | Y | Y |`REAL`        |`REAL`        |`BINARY_FLOAT` |`REAL`      |`REAL`        |`REAL`      |
+    |f64 \ float64                  |   |   | Y |    |      | Y  | Y | Y |`DOUBLE`      |`FLOAT`       |`BINARY_DOUBLE`|`REAL`      |`DOUBLE`      |`DOUBLE PRECISION`|
+    |float                          | Y | Y |   | Y  | Y    |    |   |   |`REAL`        |`REAL`        |`BINARY_FLOAT` |`REAL`      |`REAL`        |`REAL`      |
+    |double                         | Y | Y |   | Y  |      |    |   |   |`DOUBLE`      |`FLOAT`       |`BINARY_DOUBLE`|`REAL`      |`DOUBLE`      |`DOUBLE PRECISION`|
+    |decimal                        |   | Y |   |    |      |    |   |   |`NUMERIC(p,s)`|`NUMERIC(p,s)`|`NUMBER(p,s)`  |`REAL`      |`DECIMAL(p,s)`|`NUMERIC(p,s)`|
+    |long double                    | Y |   |   |    |      |    |   |   |`NUMERIC(p,s)`|`NUMERIC(p,s)`|`NUMBER(p,s)`  |`REAL`      |`DECIMAL(p,s)`|`NUMERIC(p,s)`|
+    |                               |   |   |   |    |      |    |   |   |              |              |               |            |              |              |
     * Above listed DBMS do **not** support unsigned numbers therefore unsigned numbers from your programming language will need to be promoted to a larger storage and the value be checked before it is persisted into the table.
         * <sup>1</sup> &nbsp;&nbsp;1 byte character.
         * <sup>2</sup> &nbsp;&nbsp;2 bytes character.
@@ -516,19 +519,19 @@ Always pick the data type that is adequate to store your values.  It is not just
         * <sup>d</sup> &nbsp;&nbsp;8 bytes use constraint  `CHECK( _colName_ BETWEEN 0 AND 18446744073709551615 )`
         * <sup>e</sup> 16 bytes use constraint  `CHECK( _colName_ BETWEEN 0 AND 340282366920938463463374607431768211455 )`
 
-*   |Compound Type|DB2              |Oracle          |MS-SQL           |SQLite         |MySQL            |PostgreSQL     |
-    |-------------|-----------------|----------------|-----------------|---------------|-----------------|---------------|
-    |Date         |`DATE`           |`DATE`          |`DATE`           |`TEXT`         |`DATE`           |`DATE`         |
-    |Time         |`TIME(0)`        |`INTEGER`       |`TIME(0)`        |`TEXT`         |`TIME(0)`        |`TIME(0)`      |
-    |Datetime     |`TIMESTAMP(0)`   |`TIMESTAMP(0)`  |`DATETIME`       |`TEXT`         |`DATETIME`       |`DATETIME`     |
-    |Timestamp    |`TIMESTAMP(6)`   |`TIMESTAMP(6)`  |`TIMESTAMP(6)`   |`TEXT`         |`TIMESTAMP(6)`   |`TIMESTAMP(6)` |
-    |Short string |`VARCHAR(4000)`  |`VARCHAR2(4000)`|`VARCHAR(4000)`  |`VARCHAR(4000)`|`VARCHAR(4000)`  |`VARCHAR(4000)`|
-    |Short binary |`VARBINARY(2000)`|`RAW(2000)`     |`VARBINARY(2000)`|`BLOB`         |`VARBINARY(2000)`|`BYTEA`        |
-    |Long string  |`CLOB(2M)`       |`CLOB`          |`TEXT`           |`TEXT`         |`LONGTEXT`       |`TEXT`         |
-    |Long binary  |`BLOB(2M)`       |`BLOB`          |`VARBINARY(MAX)` |`BLOB`         |`LONGBLOB`       |`BYTEA`        |
-    |             |                 |                |                 |               |                 |               |
+*   |Compound Type|DB2              |MS-SQL           |Oracle          |SQLite         |MySQL            |PostgreSQL     |
+    |-------------|-----------------|-----------------|----------------|---------------|-----------------|---------------|
+    |Date         |`DATE`           |`DATE`           |`DATE`          |`TEXT`         |`DATE`           |`DATE`         |
+    |Time         |`TIME(0)`        |`TIME(0)`        |`INTEGER`       |`TEXT`         |`TIME(0)`        |`TIME(0)`      |
+    |Datetime     |`TIMESTAMP(0)`   |`DATETIME`       |`TIMESTAMP(0)`  |`TEXT`         |`DATETIME`       |`DATETIME`     |
+    |Timestamp    |`TIMESTAMP(6)`   |`TIMESTAMP(6)`   |`TIMESTAMP(6)`  |`TEXT`         |`TIMESTAMP(6)`   |`TIMESTAMP(6)` |
+    |Short string |`VARCHAR(4000)`  |`VARCHAR(4000)`  |`VARCHAR2(4000)`|`VARCHAR(4000)`|`VARCHAR(4000)`  |`VARCHAR(4000)`|
+    |Short binary |`VARBINARY(2000)`|`VARBINARY(2000)`|`RAW(2000)`     |`BLOB`         |`VARBINARY(2000)`|`BYTEA`        |
+    |Long string  |`CLOB(2M)`       |`TEXT`           |`CLOB`          |`TEXT`         |`LONGTEXT`       |`TEXT`         |
+    |Long binary  |`BLOB(2M)`       |`VARBINARY(MAX)` |`BLOB`          |`BLOB`         |`LONGBLOB`       |`BYTEA`        |
+    |             |                 |                 |                |               |                 |               |
     * Oracle could store the time as the number of seconds (86400) since midnight.
 
-* ORM framework should support as many features outlined above.
+* ORM framework should support as many features outlined above that are cross DBMS.
 
 

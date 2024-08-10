@@ -292,7 +292,7 @@ Always pick the data type that is adequate to store your values.  It is not just
     *   |DBMS       |Type                  |Max _s_      |Default      |
         |-----------|----------------------|------------:|------------:|
         | DB2       |`BLOB(` _s_ `)`       |2,147,483,647|    1,048,576|
-        | MS-SQL    |`VARBINARY[(` _s_ | `MAX )]`|  8,000|2,147,483,647|
+        | MS-SQL    |`VARBINARY[(` _s_ \| `MAX )]`|  8,000|2,147,483,647|
         | Oracle    |`BLOB`                |             |4,294,967,295|
         | SQLite    |`BLOB`                |             |1,000,000,000|
         | MySQL     |`LONGBLOB`            |             |4,294,967,295|

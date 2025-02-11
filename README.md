@@ -70,7 +70,7 @@ The following list out the most common TABLE features supported by the most popu
 |&nbsp; &nbsp; &nbsp; &nbsp;`SMALLDATETIME`                                 |       |       | Y     |       | |       |       |        |
 |&nbsp; &nbsp; &nbsp; &nbsp;`YEAR`                                          |       |       |       |       | |       | Y     |        |
 |&nbsp; &nbsp; Collection Types:                                            |       |       |       |       | |       |       |        |
-|&nbsp; &nbsp; &nbsp; &nbsp;`ARRAY`                                         | Y     |       |       |       | |       |       | Y      |
+|&nbsp; &nbsp; &nbsp; &nbsp;`ARRAY`                                         | Y     |       |       | Y     | |       |       | Y      |
 |&nbsp; &nbsp; &nbsp; &nbsp;`ENUM`                                          |       |       |       |       | |       | Y     | Y      |
 |&nbsp; &nbsp; &nbsp; &nbsp;`SET`                                           |       |       |       |       | |       | Y     |        |
 |&nbsp; &nbsp; Reference Types:                                             |       |       |       |       | |       |       |        |
@@ -356,6 +356,31 @@ Always pick the data type that is adequate to store your values.  It is not just
         * `TIMESTAMP`            range from **1970-01-01 00:00:01.000000** to **2038-01-19 03:14:07.499999**.
 
 * It is common for business application to track the last time a row was updated.  Either a `DATETIME` or `TIMESTAMP` type can be used depending on how granular your business want to capture that moment in time.
+
+## Collection Types
+* This data type is **not** that common.  If cross DBMS portability is important, you should find another way to implement collection.
+    *   |DBMS       |Type   |
+        |-----------|-------|
+        | DB2       |`ARRAY`|
+        | MS-SQL    |       |
+        | Oracle    |*User Defined Type*|
+        | SQLite    |       |
+        | MySQL     |`SET`  |
+        | PostgreSQL|`ARRAY`|
+    * Oracle implement an array data type as a user defined table type.  The example from Oracle's documentation is as follows:
+        ```
+        CREATE  TYPE my_customers   AS  OBJECT (
+                cust_name       VARCHAR2(25)
+        )
+        ;
+        CREATE  TYPE  customer_list AS  TABLE OF  my_customers
+        ;
+        CREATE  TABLE business_contacts (
+                company_name    VARCHAR2(25),
+                company_reps    customer_list
+        )
+        ;
+        ```
 
 ## Object Types
 * All DBMS listed above support `JSON` character type with the following variance:

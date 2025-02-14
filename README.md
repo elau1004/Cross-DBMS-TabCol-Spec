@@ -516,12 +516,12 @@ Always pick the data type that is adequate to store your values.  It is not just
 * DBMS specific table space options.
     *   |DBMS       |Column Definition|
         |-----------|-----------------|
-        | DB2       | `CREATE TABLE` tabName `(...) IN`         _tabspace_name_ `[COMPRESS YES]`|
-        | MS-SQL    | `CREATE TABLE` tabName `(...) [WITH (DATA_COMPRESSION = PAGE)]` `ON` _filegroup_name_|
-        | Oracle    | `CREATE TABLE` tabName `(...) TABLESPACE` _tabspace_name_ `[COMPRESS]`|
+        | DB2       | `CREATE TABLE` tabName `(...) IN`         _tabSpaceName_ `[COMPRESS YES]`|
+        | MS-SQL    | `CREATE TABLE` tabName `(...) [WITH (DATA_COMPRESSION = PAGE)]` `ON` _fileGroup_name_|
+        | Oracle    | `CREATE TABLE` tabName `(...) TABLESPACE` _tabSpaceName_ `[COMPRESS]`|
         | SQLite    |                 |
-        | MySQL     | `CREATE TABLE` tabName `(...) TABLESPACE` _tabspace_name_|
-        | PostgreSQL| `CREATE TABLE` tabName `(...) TABLESPACE` _tabspace_name_|
+        | MySQL     | `CREATE TABLE` tabName `(...) TABLESPACE` _tabSpaceName_|
+        | PostgreSQL| `CREATE TABLE` tabName `(...) TABLESPACE` _tabSpaceName_|
     * MySQL cannot created a compressed table in a user defined tablespace.
         *  A compressed table can be created in the default tablespace with the following table option:
         * `[ENGINE=InnoDB ROW_FORMAT=COMPRESSED]`
@@ -542,7 +542,18 @@ Always pick the data type that is adequate to store your values.  It is not just
         | PostgreSQL| `COMMENT ON TABLE` _tabName_ `IS` 'string'|
 
 ## Index Options
-* Work in progress.
+* DBMS specific table index options.
+    *   |DBMS       |Column Definition|
+        |-----------|-----------------|
+        | DB2       | `CREATE [UNIQUE] INDEX` idxName `ON` tabName`(`col `[DESC] [,..n] )`<br>`[IN` tabSpaceName`] [INCLUDE(`col `[,..n])]` `[COMPRESS [YES\|NO]]`|
+        | MS-SQL    | `CREATE [UNIQUE] [CLUSTERED] INDEX` idxName `ON` tabName`(`col `[DESC] [,..n] )`<br>`[INCLUDE(`col `[,..n])]` `[WHERE` expr `] [WITH( DATA_COMPRESSION=PAGE )] [ON fileGroup]`|
+        | Oracle    | `CREATE [UNIQUE\|BITMAP] INDEX` idxName `ON` tabName`(`col `[DESC] [,..n] )`<br>`[TABLESPACE` tabSpaceName`] [COMPRESS [ADVANCED]] [PARALLEL\|NOPARALLEL]`|
+        | SQLite    | `CREATE [UNIQUE] [IF NOT EXISTS] INDEX` idxName `ON` tabName`(`col `[DESC] [,..n] )` `[WHERE` expr`]`|
+        | MySQL     | `CREATE [UNIQUE] [IF NOT EXISTS] INDEX` idxName `ON` tabName`(`col `[DESC] [,..n] )`|
+        | PostgreSQL| `CREATE [UNIQUE] [IF NOT EXISTS] INDEX` idxName `ON` tabName`(`col `[DESC] [,..n] )`<br>`INCLUDE(`col `[,..n])] [TABLESPACE` tabSpace `] [WHERE expr]`|
+
+    *   The `BITMAP` and `WHERE` options are not well supported across our listed DBMSs.  These options should be avoided unless you have a valid case to use them.
+    *   The `INCLUDE` option can be very useful in filtering rows without incurring the seek back to the table.  DBMS that do _not_ support this option can create a multi column **non**-unique index by appending the additional columns to it.  If your intention for the index is to be unique, the additional appended/included columns will change your original definition of unique.
 
 # Recommendations for ORM frameworks
 * To be compatible across these DBMS, unfortunately, we should code to the lowest common denominator when we map from a programming language into a table:

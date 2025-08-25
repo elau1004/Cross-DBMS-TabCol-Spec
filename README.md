@@ -1,10 +1,11 @@
-# Cross DBMS Table features and nuiances
+# Cross DBMS Table features and nuances
 The following list out the most common TABLE features supported by the most popular DBMS as off 2024-07-15.  This is still work in progress.  You should trust but verify the information in this cheat sheet.
 
 |Features                                                                   |ANSI_99|DB2_LUW|MS_SQL |Oracle | |SQLite |MySQL  |PostgreSQL|
 |---------------------------------------------------------------------------|:-----:|:-----:|:-----:|:-----:|-|:-----:|:-----:|:------:|
 |**Create Table**:                                                          |       |       |       |       | |       |       |        |
 |&nbsp; &nbsp;`IF NOT EXISTS`                                               | Y     | Y     |       | Y     | | Y     | Y     | Y      |
+|&nbsp; &nbsp;`STRICT`                                                      |       |       |       |       | | Y     |       |        |
 |**Data Types**:                                                            |       |       |       |       | |       |       |        |
 |&nbsp; &nbsp; Boolean Types:                                               |       |       |       |       | |       |       |        |
 |&nbsp; &nbsp; &nbsp; &nbsp;`BOOLEAN`                                       | Y     | Y     |       |       | |       | Y     | Y      |
@@ -158,6 +159,7 @@ Always pick the data type that is adequate to store your values.  It is not just
     * `ID   SMALLINT NOT NULL CHECK( ID BETWEEN 1 AND 200 )`
     * **SQLite** uses type affinity.  SEE: https://www.sqlite.org/datatype3.html#affinity
         * Any name for the data type will be accepted.
+        * However, if you are developing a cross DBMS application you should consider creating the **SQLite** tables in `STRICT` mode.  SEE: [Strict Table](https://www.sqlite.org/stricttables.html).
 
 
 ### Boolean:
@@ -343,9 +345,9 @@ Always pick the data type that is adequate to store your values.  It is not just
             | 1 |       100 ms|      0.1|
             | 2 |        10 ms|     0.01|
             | 3 |         1 ms|    0.001|
-            | 4 |       100 us|   0.0001|
-            | 5 |        10 us|  0.00001|
-            | 6 |         1 us| 0.000001|
+            | 4 |       100 µs|   0.0001|
+            | 5 |        10 µs|  0.00001|
+            | 6 |         1 µs| 0.000001|
 
     * If you have a needed to support multiple timezones, you should consider storing all dates in UTC.
     * MS-SQL value range:
@@ -453,9 +455,10 @@ Always pick the data type that is adequate to store your values.  It is not just
                 * **ID** is much more efficient in storage requirement and impact indices build using it.  e.g. 4 byte versus 16 byte for UUID.
             * Use **UUID** if you have a distributed master-master DBMS setup where inserts are completely independent and unique.
                 * **UUID** is rather random and do not have the linear order of an ID.
-                * **UUID** is much less efficient is storage requirement and impact indices build using it.
+                  * Considered using **UUID** version **7** (`UUIDv7`) which is time ordered if you must.
+                * **UUID** is much less efficient is storage requirement and impact indices build using it.  Furthermore, comparing 16 bytes **UUID** against a 4 bytes **INT** on joins will add up to a slower performance.  Don't forget the CPU cache lines if you have lots of data.
                 * If you have a <u>small</u> number of distributed DBMS, you could consider using interleave **ID** with an increment that is larger than **1** starting with a different offset for each of your DBMS.
-
+                
 ## Returning Generated ID
 * DBMS specific implementation for a two column table with a primary key column named `ID` of type  `integer` and the other column named `C1` of type `float`:
     #### DB2
